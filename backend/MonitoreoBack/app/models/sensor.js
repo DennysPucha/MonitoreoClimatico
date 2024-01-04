@@ -12,8 +12,8 @@ module.exports = (sequelize, DataTypes) => {
         sensor.hasMany(models.reporte,{
             foreignKey:'id_sensor',as:'reporte'
         });
-        sensor.belongsTo(models.persona_sensor,{
-            foreignKey:'persona_sensor'
+        sensor.belongsTo(models.persona,{
+            foreignKey:'id_persona'
         });
     };
     return sensor;
