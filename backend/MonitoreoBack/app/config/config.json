@@ -1,10 +1,12 @@
 {
-    "development":{
-        "username":"admin",
-        "password":"123456789",
-        "database":"autos",
-        "dialect":"mysql",
-        "operatorAliases":false,
-        "port": 3309
+    "development": {
+        "username": "avnadmin",
+        "password": "AVNS_wozT7igR1qhV35lLSkm",
+        "database": "defaultdb",
+        "dialect": "mysql",
+        "host": "monitoreo-climatico-unl-4776.a.aivencloud.com",
+        "port":"14266",
+        "serviceUri":"mysql://avnadmin:AVNS_wozT7igR1qhV35lLSkm@monitoreo-climatico-unl-4776.a.aivencloud.com:14266/defaultdb?ssl-mode=REQUIRED",
+        "charset": "utf8"
     }
 }
