@@ -60,9 +60,9 @@ router.get('/listar/cuentas', cuentaController.listar);
 
 
 router.get('/listar/personas', personaController.listar);
-router.post('/modificar/personas/:external', personaController.modificar);
+router.post('/modificar/persona/:external', personaController.modificar);
 router.post('/guardar/personas', personaController.guardar);
-router.get('/obtener/personas/:external', personaController.obtener);
+router.get('/obtener/persona/:external', personaController.obtener);
 
 
 
