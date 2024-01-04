@@ -44,7 +44,7 @@ class CuentaControl {
                                 expiresIn: '2h'
                             });
                             const info = {
-                                usuario: cuentaPersona.persona.nombres+""+cuentaPersona.persona.apellidos,
+                                usuario:cuentaPersona.persona.apellidos,
                                 token: token,
                                 external_id: cuentaPersona.persona.external_id,
                                 rol: cuentaPersona.persona.rol.nombre
