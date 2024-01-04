@@ -4,7 +4,7 @@
 
 module.exports = (sequelize, DataTypes) => {
     const reporte = sequelize.define('reporte', {
-        fecha: { type: DataTypes.DATE },
+        fecha: { type: DataTypes.DATEONLY },
         dato: { type: DataTypes.STRING(1000),allowNull:false},
         external_id: { type: DataTypes.UUID, defaultValue: DataTypes.UUIDV4 }
     }, { freezeTableName: true });
