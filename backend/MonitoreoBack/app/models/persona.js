@@ -11,9 +11,7 @@ module.exports = (sequelize, DataTypes) => {
         external_id: { type: DataTypes.UUID, defaultValue: DataTypes.UUIDV4 }
     }, {freezeTableName: true });
     persona.associate=function(models){
-        persona.hasOne(models.cuenta,{
-            foreignKey:'id_persona',as:'cuenta'
-        });
+        persona.hasOne(models.cuenta, { as: 'cuenta', foreignKey: 'personaId' });
         persona.belongsTo(models.rol,{
             foreignKey:'id_rol'
         });
