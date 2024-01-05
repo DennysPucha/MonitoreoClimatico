@@ -5,8 +5,8 @@
 module.exports = (sequelize, DataTypes) => {
     const persona = sequelize.define('persona', {
         nombres: { type: DataTypes.STRING(150), defaultValue: "NONE" },
-        apellidos: { type: DataTypes.STRING(15), defaultValue: "NONE" },
-        direccion: { type: DataTypes.STRING, defaultValue: "NONE" },
+        apellidos: { type: DataTypes.STRING(150), defaultValue: "NONE" },
+        direccion: { type: DataTypes.STRING(300), defaultValue: "NONE" },
         cedula: { type: DataTypes.STRING(15), defaultValue: "NONE" },
         external_id: { type: DataTypes.UUID, defaultValue: DataTypes.UUIDV4 }
     }, {freezeTableName: true });
@@ -20,8 +20,8 @@ module.exports = (sequelize, DataTypes) => {
         persona.hasMany(models.pronostico,{
             foreignKey:'id_persona', as:'pronostico'
         });
-        persona.belongsTo(models.persona_sensor,{
-            foreignKey:'persona_sensor'
+        persona.belongsToMany(models.sensor, {
+            through: 'PersonaSensor'
         });
     };
     return persona;

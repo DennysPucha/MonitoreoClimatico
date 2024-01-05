@@ -1,7 +1,5 @@
 "use strict";
 
-
-
 module.exports = (sequelize, DataTypes) => {
     const cuenta = sequelize.define('cuenta', {
         correo: { type: DataTypes.STRING(100),unique:true },
