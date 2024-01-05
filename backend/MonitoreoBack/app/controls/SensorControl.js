@@ -12,7 +12,7 @@ class SensorControl {
         try {
             const lista = await sensor.findOne({
                 where: { external_id: external },
-                attributes: ['nombre', 'ip', 'tipo_sensor', 'estado', 'external_id']
+                attributes: ['nombre', 'ip', 'estado', 'external_id']
             });
 
             if (!lista) {
@@ -35,7 +35,7 @@ class SensorControl {
             const lista = await sensor.findOne({
                 where: { external_id: external },
                 include:[{model:models.reporte, as:"reporte",attributes:['fecha','dato','external_id']}],
-                attributes: ['nombre', 'ip', 'tipo_sensor', 'estado', 'external_id']
+                attributes: ['nombre', 'ip', 'estado','tipo_dato', 'external_id']
             });
 
             if (!lista) {
@@ -54,8 +54,8 @@ class SensorControl {
     async listar(req, res) {
         try {
             const lista = await sensor.findAll({
-                attributes: ['nombre', 'ip', 'tipo_sensor', 'estado', 'external_id'],
-                include:[{model:models.reporte, as:"reporte",attributes:['fecha','dato','external_id']}],
+                attributes: ['nombre', 'ip', 'estado', 'external_id'],
+                include:[{model:models.reporte, as:"reporte",attributes:['fecha','dato','tipo_dato','external_id']}],
             });
 
             res.status(200);
@@ -67,9 +67,9 @@ class SensorControl {
     }
 
     async guardar(req, res) {
-        const { nombre, ip, tipo_sensor, persona:id_persona} = req.body;
+        const { nombre, ip, persona:id_persona} = req.body;
 
-        if (nombre && ip && tipo_sensor && id_persona) {
+        if (nombre && ip && id_persona) {
             try {
                 const perA = await models.persona.findOne({ where: { external_id: id_persona } });
 
@@ -83,7 +83,6 @@ class SensorControl {
                 const data = {
                     nombre,
                     ip,
-                    tipo_sensor,
                     external_id: uuid.v4(),
                     id_persona: perA.id,
                 };
@@ -121,7 +120,6 @@ class SensorControl {
         if (
             req.body.hasOwnProperty('nombre') &&
             req.body.hasOwnProperty('ip') &&
-            req.body.hasOwnProperty('tipo_sensor') &&
             req.body.hasOwnProperty('persona')
         ) {
             const external = req.params.external;
@@ -143,7 +141,6 @@ class SensorControl {
                 const data = {
                     nombre: req.body.nombre,
                     ip: req.body.ip,
-                    tipo_sensor: req.body.tipo_sensor,
                     id_persona: perA.id,
                 };
             
