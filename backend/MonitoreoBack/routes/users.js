@@ -78,5 +78,7 @@ router.get('/listar/reportes', reporteControler.listar);
 router.post('/modificar/reporte/:external', reporteControler.modificar);
 router.post('/guardar/reporte', reporteControler.guardar);
 router.get('/obtener/reporte/:external', reporteControler.obtener);
+router.get('/obtener/reporteHora/:external', reporteControler.reporteHora);
+
 
 module.exports = router;

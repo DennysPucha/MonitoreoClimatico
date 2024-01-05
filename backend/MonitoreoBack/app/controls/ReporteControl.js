@@ -151,6 +151,33 @@ class ReporteControl {
         }
     }
 
+    async reporteHora(req, res) {
+        const external = req.params.external;
+    
+        try {
+            const reportesPorHora = await reporte.findAll({
+                where: {
+                    external_id: external,
+                    fecha: { [Op.between]: [inicioDeLaHora, finDeLaHora] }
+                },
+                attributes: ['fecha', 'dato', 'tipo_dato', 'external_id']
+            });
+    
+            if (!reportesPorHora || reportesPorHora.length === 0) {
+                res.status(404);
+                return res.json({ message: "Recurso no encontrado para la hora especificada", code: 404, data: {} });
+            }
+    
+            res.status(200);
+            res.json({ message: "Éxito", code: 200, data: reportesPorHora });
+        } catch (error) {
+            res.status(500);
+            res.json({ message: "Error interno del servidor", code: 500, error: error.message });
+        }
+    }
+    
+
+    
 
 }
 
