@@ -7,11 +7,13 @@ const PersonaController = require('../app/controls/PersonaControl');
 const RolController = require('../app/controls/RolControl');
 const CuentaController = require('../app/controls/CuentaControl');
 const SensorController = require('../app/controls/SensorControl');
+const ReporteController= require('../app/controls/ReporteControl');
 
 const personaController = new PersonaController();
 const rolController = new RolController();
 const cuentaController = new CuentaController();
 const sensorController = new SensorController();
+const reporteControler=new ReporteController();
 
 router.get('/', function(req, res, next) {
   res.send('respond with a resource');
@@ -66,10 +68,15 @@ router.post('/guardar/personas', personaController.guardar);
 router.get('/obtener/persona/:external', personaController.obtener);
 
 router.get('/obtener/sensor/:external', sensorController.obtener);
+router.get('/obtener/sensorReportes/:external', sensorController.obtenerReportes);
 router.get('/listar/sensores', sensorController.listar);
 router.post('/modificar/sensor/:external', sensorController.modificar);
 router.post('/guardar/sensor', sensorController.guardar);
 
 
+router.get('/listar/reportes', reporteControler.listar);
+router.post('/modificar/reporte/:external', reporteControler.modificar);
+router.post('/guardar/reporte', reporteControler.guardar);
+router.get('/obtener/reporte/:external', reporteControler.obtener);
 
 module.exports = router;
