@@ -12,7 +12,7 @@ class ReporteControl {
         try {
             const lista = await reporte.findOne({
                 where: { external_id: external },
-                attributes: ['fecha', 'dato', 'external_id']
+                attributes: ['fecha', 'dato','tipo_dato', 'external_id']
             });
 
             if (!lista) {
@@ -31,7 +31,7 @@ class ReporteControl {
     async listar(req, res) {
         try {
             const lista = await reporte.findAll({
-                attributes: ['fecha', 'dato', 'external_id']
+                attributes: ['fecha', 'dato','tipo_dato', 'external_id']
             });
 
             res.status(200);
@@ -43,7 +43,7 @@ class ReporteControl {
     }
 
     async guardar(req, res) {
-        const { fecha, dato, sensor:id_sensor} = req.body;
+        const { fecha, dato,tipo_dato,sensor:id_sensor} = req.body;
 
         if (fecha && dato && id_sensor) {
             try {
@@ -59,6 +59,7 @@ class ReporteControl {
                 const data = {
                     fecha,
                     dato,
+                    tipo_dato,
                     external_id: uuid.v4(),
                     id_sensor: sensorA.id,
                 };
@@ -96,7 +97,8 @@ class ReporteControl {
         if (
             req.body.hasOwnProperty('fecha') &&
             req.body.hasOwnProperty('dato') &&
-            req.body.hasOwnProperty('sensor')
+            req.body.hasOwnProperty('tipo_dato') &&
+            req.body.hasOwnProperty('sensor') 
         ) {
             const external = req.params.external;
     
