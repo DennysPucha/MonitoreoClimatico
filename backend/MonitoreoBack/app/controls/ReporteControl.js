@@ -12,7 +12,7 @@ class ReporteControl {
         try {
             const lista = await reporte.findOne({
                 where: { external_id: external },
-                attributes: ['fecha', 'dato','tipo_dato', 'external_id']
+                attributes: ['fecha','hora_registro', 'dato','tipo_dato', 'external_id']
             });
 
             if (!lista) {
@@ -31,7 +31,7 @@ class ReporteControl {
     async listar(req, res) {
         try {
             const lista = await reporte.findAll({
-                attributes: ['fecha', 'dato','tipo_dato', 'external_id']
+                attributes: ['fecha','hora_registro', 'dato','tipo_dato', 'external_id']
             });
 
             res.status(200);
