@@ -78,8 +78,8 @@ router.get('/listar/reportes', reporteControler.listar);
 router.post('/modificar/reporte/:external', reporteControler.modificar);
 router.post('/guardar/reporte', reporteControler.guardar);
 router.get('/obtener/reporte/:external', reporteControler.obtener);
-router.get('/reporteHora/reporte/:external', reporteControler.reporteHora);
-router.get('/buscar/reportes/:external', reporteControler.buscar);
+router.get('/buscar/reporte/', reporteControler.buscar);
+router.get('/buscarporFecha/reporte/',reporteControler.buscarporFecha);
 
 
 module.exports = router;

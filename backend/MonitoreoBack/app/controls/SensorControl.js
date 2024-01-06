@@ -173,7 +173,6 @@ class SensorControl {
         }
     }
 
-
 }
 
 module.exports = SensorControl;
