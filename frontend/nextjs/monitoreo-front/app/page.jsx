@@ -1,11 +1,7 @@
 
-import Menu from '@/componentes/menu';
 export default function Home() {
   return (
     <div className="container">
-      <header>
-        <Menu />
-      </header>
       <div className="container d-flex align-items-center justify-content-center">
       <h1>Ventas de autos online</h1>
       </div>
