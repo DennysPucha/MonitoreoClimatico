@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { obtenerTodo } from "@/hooks/Conexion";
@@ -25,33 +25,38 @@ export default function Principal() {
   }, []);
 
   return (
-    
-    <div className="container mt-4">
-      <th>MONITOREO CLIMATICO</th>
-      {Array.isArray(reportes) && reportes.length > 0 ? (
-        <table className="table table-bordered">
-          <thead className="thead-dark">
-            <tr>
-              <th>ID</th>
-              <th>Fecha</th>
-              <th>Dato</th>
-              <th>Tipo Dato</th>
-            </tr>
-          </thead>
-          <tbody>
-            {reportes.map((reporte, index) => (
-              <tr key={index}>
-                <td>{index + 1}</td>
-                <td>{reporte.fecha}</td>
-                <td>{reporte.dato}</td>
-                <td>{reporte.tipo_dato}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      ) : (
-        <p>No se encontraron reportes.</p>
-      )}
+    <div className="container mt-4 d-flex justify-content-center align-items-center">
+      <div className="row">
+        <div className="col-12 table-responsive">
+          {Array.isArray(reportes) && reportes.length > 0 ? (
+            <table
+              className="table table-hover table-bordered table-striped"
+              style={{ backgroundColor: "#e6f7ff", fontSize: "18px" }}
+            >
+              <thead className="thead-dark">
+                <tr>
+                  <th>ID</th>
+                  <th>Fecha</th>
+                  <th>Dato</th>
+                  <th>Tipo Dato</th>
+                </tr>
+              </thead>
+              <tbody>
+                {reportes.map((reporte, index) => (
+                  <tr key={index}>
+                    <td>{index + 1}</td>
+                    <td>{reporte.fecha}</td>
+                    <td>{reporte.dato}</td>
+                    <td>{reporte.tipo_dato}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : (
+            <p>No se encontraron reportes.</p>
+          )}
+        </div>
+      </div>
     </div>
   );
 }
