@@ -1,36 +1,57 @@
-import React from 'react';
+"use client";
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { obtenerTodo } from "@/hooks/Conexion";
+import { getToken, getExternalUser } from "@/hooks/SessionUtil";
 
-const weatherData = [
-    { time: '1:00', humidity: '24%', windSpeed: '7km/h', windDirection: 'SSE', temperature: '14°' },
-    { time: '2:00', humidity: '24%', windSpeed: '6km/h', windDirection: 'SSE', temperature: '14°' },
-    // ... y así sucesivamente con los demás datos de tiempo.
- ];
-export default function Page() {
-    return (
-<div>
-      <h1>Monitoreo climático</h1>
-      <table>
-        <thead>
-          <tr>
-            <th>Hora</th>
-            <th>Humedad</th>
-            <th>Velocidad del viento</th>
-            <th>Dirección del viento</th>
-            <th>Temperatura</th>
-          </tr>
-        </thead>
-        <tbody>
-          {weatherData.map((data, index) => (
-            <tr key={index}>
-              <td>{data.time}</td>
-              <td>{data.humidity}</td>
-              <td>{data.windSpeed}</td>
-              <td>{data.windDirection}</td>
-              <td>{data.temperature}</td>
+export default function Principal() {
+  const [reportes, setReportes] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const token = getToken();
+      const externalUser = getExternalUser();
+
+      try {
+        const response = await obtenerTodo("listar/reportes", token);
+        setReportes(response.data);
+        console.log(response);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  return (
+    
+    <div className="container mt-4">
+      <th>MONITOREO CLIMATICO</th>
+      {Array.isArray(reportes) && reportes.length > 0 ? (
+        <table className="table table-bordered">
+          <thead className="thead-dark">
+            <tr>
+              <th>ID</th>
+              <th>Fecha</th>
+              <th>Dato</th>
+              <th>Tipo Dato</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {reportes.map((reporte, index) => (
+              <tr key={index}>
+                <td>{index + 1}</td>
+                <td>{reporte.fecha}</td>
+                <td>{reporte.dato}</td>
+                <td>{reporte.tipo_dato}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      ) : (
+        <p>No se encontraron reportes.</p>
+      )}
     </div>
-    );
+  );
 }

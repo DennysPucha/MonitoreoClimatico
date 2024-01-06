@@ -3,6 +3,7 @@
 const models = require('../models');
 const {reporte, rol, cuenta, sequelize,persona,sensor} = models;
 const uuid = require('uuid');
+const { Op } = require('sequelize');
 
 class ReporteControl {
 
@@ -175,9 +176,35 @@ class ReporteControl {
             res.json({ message: "Error interno del servidor", code: 500, error: error.message });
         }
     }
-    
 
-    
+    async buscar(req, res) {
+        const external = req.params.external;
+        const horaInicio = req.query.horaInicio;
+        const horaFin = req.query.horaFin; 
+
+        try {
+            const reportesPorHora = await reporte.findAll({
+                where: {
+                    external_id: external,
+                    hora_registro: { [Op.between]: [horaInicio, horaFin] }
+                },
+                attributes: ['fecha', 'hora_registro', 'dato', 'tipo_dato', 'external_id']
+            });
+
+            if (!reportesPorHora || reportesPorHora.length === 0) {
+                res.status(404);
+                return res.json({ message: "Recurso no encontrado para la hora especificada", code: 404, data: {} });
+            }
+
+            res.status(200);
+            res.json({ message: "Éxito", code: 200, data: reportesPorHora });
+        } catch (error) {
+            res.status(500);
+            res.json({ message: "Error interno del servidor", code: 500, error: error.message });
+        }
+    }
+
+
 
 }
 
