@@ -34,8 +34,8 @@ class SensorControl {
         try {
             const lista = await sensor.findOne({
                 where: { external_id: external },
-                include:[{model:models.reporte, as:"reporte",attributes:['fecha','dato','external_id']}],
-                attributes: ['nombre', 'ip', 'estado','tipo_dato', 'external_id']
+                include:[{model:models.reporte, as:"reporte",attributes:['fecha','dato','tipo_dato','hora_registro','external_id']}],
+                attributes: ['nombre', 'ip', 'estado', 'external_id']
             });
 
             if (!lista) {
@@ -55,7 +55,7 @@ class SensorControl {
         try {
             const lista = await sensor.findAll({
                 attributes: ['nombre', 'ip', 'estado', 'external_id'],
-                include:[{model:models.reporte, as:"reporte",attributes:['fecha','dato','tipo_dato','external_id']}],
+                include:[{model:models.reporte, as:"reporte",attributes:['fecha','dato','tipo_dato','hora_registro','external_id']}],
             });
 
             res.status(200);
