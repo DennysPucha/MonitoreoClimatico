@@ -3,7 +3,7 @@ import { save } from "./SessionUtil";
 
 export async function inicioSesion(data) {
     try {
-        const sesion = await enviar("login", data);
+        const sesion = await enviar("iniciar_sesion", data);
         if (sesion.code === 200 && sesion.code) {
             console.log(sesion);
             save("user", sesion.data.user);
