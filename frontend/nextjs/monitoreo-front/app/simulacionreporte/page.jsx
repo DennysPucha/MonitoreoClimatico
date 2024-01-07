@@ -3,12 +3,9 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { obtenerTodo } from "@/hooks/Conexion";
 import { getToken, getExternalUser } from "@/hooks/SessionUtil";
-import { format, parseISO } from "date-fns";
-import esLocale from "date-fns/locale/es";
 
-export default function Page({ params }) {
-  const { fecha } = params;
-  console.log(fecha);
+export default function Principal() {
+
   const [reportes, setReportes] = useState([]);
   const [filtroFecha, setFiltroFecha] = useState("");
   const [sinResultados, setSinResultados] = useState(false);
@@ -21,13 +18,13 @@ export default function Page({ params }) {
     const token = getToken();
 
     try {
+
       const endpoint = filtroFecha
         ? `buscarporFecha/reporte?fecha=${filtroFecha}`
         : "listar/reportes";
       console.log(filtroFecha);
       const response = await obtenerTodo(endpoint, token);
       setReportes(response.data);
-      console.log("datos de reporte", response.data);
       setSinResultados(response.data.length === 0);
     } catch (error) {
       console.error(error);
@@ -67,29 +64,25 @@ export default function Page({ params }) {
                   <th>Fecha</th>
                   <th>Dato</th>
                   <th>Tipo Dato</th>
-                  <th>Acciones</th>
                   <th>Hora</th>
+                  <th>Acciones</th>
                 </tr>
               </thead>
               <tbody>
                 {reportes.map((reporte, index) => (
                   <tr key={index}>
                     <td>{index + 1}</td>
-                    <td>
-                      {format(parseISO(reporte.fecha), "eeee, d MMM yyyy", {
-                        locale: esLocale, // Puedes importar 'esLocale' de 'date-fns/locale/es'
-                      })}
-                    </td>
+                    <td>{reporte.fecha}</td>
                     <td>{reporte.dato}</td>
                     <td>{reporte.tipo_dato}</td>
                     <td>{reporte.hora_registro}</td>
                     <td>
-                      {reporte.external_id && (
-                        <Link href={`reportes/${reporte.fecha}`} passHref>
-                          <button className="btn btn-primary">Ver detalle</button>
-                        </Link>
-                      )}
-                    </td>
+                              {reporte.external_id && (
+                                <Link href={`reportes/${reporte.external_id}`} passHref>
+                                  <button className="btn btn-primary">Ver detalle</button>
+                                </Link>
+                              )}
+                            </td>
                   </tr>
                 ))}
               </tbody>

@@ -80,6 +80,6 @@ router.post('/guardar/reporte', reporteControler.guardar);
 router.get('/obtener/reporte/:external', reporteControler.obtener);
 router.get('/buscar/reporte/', reporteControler.buscar);
 router.get('/buscarporFecha/reporte/',reporteControler.buscarporFecha);
-
-
+router.get('/obtenerPorHora/reporte/', reporteControler.obtenerPorHora);
+router.get('/listarPorHora/reporte', reporteControler.listarPorHora);
 module.exports = router;
