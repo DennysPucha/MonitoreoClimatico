@@ -37,23 +37,41 @@ export default function Page({ params }) {
     const sumaHumedad = humedadReports.reduce((sum, reporte) => sum + parseFloat(reporte.dato), 0);
     const promedioHumedad = sumaHumedad / humedadReports.length;
 
-    return promedioHumedad.toFixed(2); 
+    return promedioHumedad.toFixed(2);
   };
 
   const promedioHumedad = calcularPromedioHumedad();
 
   return (
     <div className="container mt-4">
-      <h1 className="text-white">Reporte del día</h1>
-    
+      <Link href="/informes" passHref>
+      <button
+            className="btn btn-success"
+            style={{
+              backgroundColor: "#000000",
+              color: "#ffffff",
+            }}
+          >
+            Volver
+          </button>
+      </Link>
+      <h1 className="text-black">Reporte del día</h1>
+
       {promedioHumedad !== null && (
-        <div className="mb-3">
+        <div className="text-black">
           <p>Promedio de Humedad: {promedioHumedad}%</p>
         </div>
       )}
 
       {reportes.length > 0 ? (
-        <table className="table">
+        <table
+          className="table table-hover table-bordered table-striped"
+          style={{
+            backgroundColor: "#D3D3D3", // Cambiar el color de fondo a #D3D3D3
+            fontSize: "18px",
+            color: "#000000", // Cambiar el color del texto a negro
+          }}
+        >
           <thead>
             <tr>
               <th scope="col">#</th>
