@@ -24,7 +24,6 @@ export default function Page({ params }) {
     fetchData();
   }, []);
 
-  // Función para calcular el promedio de humedad
   const calcularPromedioHumedad = () => {
     if (reportes.length === 0) {
       return null;
@@ -38,15 +37,15 @@ export default function Page({ params }) {
     const sumaHumedad = humedadReports.reduce((sum, reporte) => sum + parseFloat(reporte.dato), 0);
     const promedioHumedad = sumaHumedad / humedadReports.length;
 
-    return promedioHumedad.toFixed(2); // Redondear el promedio a dos decimales
+    return promedioHumedad.toFixed(2); 
   };
 
   const promedioHumedad = calcularPromedioHumedad();
 
   return (
     <div className="container mt-4">
-      <h1>Reporte del día </h1>
-
+      <h1 className="text-white">Reporte del día</h1>
+    
       {promedioHumedad !== null && (
         <div className="mb-3">
           <p>Promedio de Humedad: {promedioHumedad}%</p>
@@ -75,7 +74,7 @@ export default function Page({ params }) {
           </tbody>
         </table>
       ) : (
-        <p>No hay autos disponibles para vender.</p>
+        <p>No hay reporte de ese día en especifico</p>
       )}
     </div>
   );
