@@ -54,7 +54,7 @@ export default function Page({params}) {
     return (
         <div style={{ minHeight: '50vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <div className="card" style={{ width: '400px', padding: '15px', borderRadius: '10px' , backgroundColor: '#33B9FF' }}>
-                <h2 className="text-center mb-4">Registrar Sensor</h2>
+                <h2 className="text-center mb-4">Editar Sensor</h2>
                 <form className="user" onSubmit={handleSubmit(onSubmit)}>
                     <div className="form-outline mb-4">
                         <label className="form-label">Alias para el sensor</label>

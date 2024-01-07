@@ -172,7 +172,32 @@ class SensorControl {
             res.json({ msg: "ERROR", tag: "Datos incorrectos", code: 400 });
         }
     }
-
+    
+    async buscarporFecha(req, res) {
+        const external = req.params.external;
+        const fechaEspecifica = req.query.fecha; // Obtener la fecha desde la consulta
+    
+        try {
+            const reportesPorFecha = await reporte.findAll({
+                where: {
+                    external_id: external,
+                    fecha: fechaEspecifica
+                },
+                attributes: ['fecha', 'dato', 'tipo_dato', 'external_id']
+            });
+    
+            if (!reportesPorFecha || reportesPorFecha.length === 0) {
+                res.status(404);
+                return res.json({ message: "No hay informe para la fecha especificada", code: 404, data: {} });
+            }
+    
+            res.status(200);
+            res.json({ message: "Éxito", code: 200, data: reportesPorFecha });
+        } catch (error) {
+            res.status(500);
+            res.json({ message: "Error interno del servidor", code: 500, error: error.message });
+        }
+    }
 
 }
 

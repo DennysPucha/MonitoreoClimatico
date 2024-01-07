@@ -35,7 +35,7 @@ export default function Page() {
                 src="https://cdn-icons-png.flaticon.com/512/2383/2383684.png"
                 alt="Logo"
                 className="navbar-brand"
-                style={{ width: "70px", height: "70px" }} // Ajusta el tamaño según tus necesidades
+                style={{ width: "70px", height: "70px" }}
               />
             </Link>
             <span className="navbar-text me-3 text-white fw-bold">Monitoreo Climático</span>
@@ -66,7 +66,7 @@ export default function Page() {
                   src="https://cdn.icon-icons.com/icons2/1369/PNG/512/-account-circle_89831.png"
                   alt="Icono Cuenta"
                   className="nav-link"
-                  style={{ width: "70px", height: "70px" }} // Ajusta el tamaño según tus necesidades
+                  style={{ width: "70px", height: "70px" }}
                 />
               </Link>
             </div>
@@ -82,7 +82,7 @@ export default function Page() {
             <div className="mt-3">
               <div
                 className="overflow-auto border p-3 bg-black bg-opacity-10 text-white rounded"
-                style={{ maxHeight: "300px" }} // Ajusta la altura según tus necesidades
+                style={{ maxHeight: "300px" }} 
               >
                 {Array.isArray(sensores) && sensores.length > 0 ? (
                   <div>
@@ -113,7 +113,7 @@ export default function Page() {
                             </td>
                             <td>
                               {sensor.external_id && (
-                                <Link href={`editsensor/${sensor.external_id}`} passHref>
+                                <Link href={`editSensor/${sensor.external_id}`} passHref>
                                   <button className="btn btn-primary">Editar</button>
                                 </Link>
                               )}
