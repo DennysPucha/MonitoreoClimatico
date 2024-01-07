@@ -179,7 +179,7 @@ class ReporteControl {
     }
 
     async buscarporFecha(req, res) {
-        const fechaEspecifica = req.query.fecha; // Obtener la fecha desde la consulta
+        const fechaEspecifica = req.query.fecha; 
     
         try {
             const reportesPorFecha = await reporte.findAll({

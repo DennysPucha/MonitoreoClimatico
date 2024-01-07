@@ -7,12 +7,14 @@ import { format, isAfter, isToday } from "date-fns";
 import esLocale from "date-fns/locale/es";
 import { obtenerReportesPorFecha } from "@/hooks/obtenerPorFecha";
 import css from "styled-jsx/css";
+import mensajes from "@/componentes/mensajes";
 
 export default function Page({ params }) {
   const { fecha } = params;
   console.log(fecha);
   const [reportes, setReportes] = useState([]);
   const [filtroFecha, setFiltroFecha] = useState("");
+  
   const [sinResultados, setSinResultados] = useState(false);
 
   useEffect(() => {
@@ -20,11 +22,15 @@ export default function Page({ params }) {
     const cargarTodosLosReportes = async () => {
       const token = getToken();
       try {
-        const response = await obtenerTodo(); // Reemplaza con la función correcta para obtener todos los reportes
+        const response = await obtenerTodo("listar/reportes", token);
         const reportesAgrupados = groupAndSelectMaxTipoDato(response.data);
         setReportes(reportesAgrupados);
         setSinResultados(Object.keys(reportesAgrupados).length === 0);
+        if (Object.keys(reportesAgrupados).length === 0) {
+          mensajes("No se han encontrado reportes para esa fecha", "error", "Error en busqueda");
+        }
         console.log(response);
+        console.log("data inform", reportesAgrupados);
       } catch (error) {
         console.error(error);
         setSinResultados(true);
@@ -38,9 +44,10 @@ export default function Page({ params }) {
     const reportesAgrupados = {};
 
     reportes.forEach((reporte) => {
-      const fechaFormateada = format(new Date(reporte.fecha), "yyyy-MM-dd", {
-        locale: esLocale,
-      });
+      const fechaFormateada = reporte.fecha;
+      //const fechaFormateada = format(new Date(reporte.fecha), "yyyy-MM-dd", {
+      //locale: esLocale,
+      //});
 
       if (!reportesAgrupados[fechaFormateada]) {
         reportesAgrupados[fechaFormateada] = reporte;
@@ -55,7 +62,7 @@ export default function Page({ params }) {
   };
 
   const handleBuscarPorFecha = async () => {
-    // Si deseas mantener la funcionalidad de búsqueda, puedes agregarla aquí
+
     try {
       const response = await obtenerReportesPorFecha(filtroFecha);
       const reportesAgrupados = groupAndSelectMaxTipoDato(response.data);
@@ -70,6 +77,28 @@ export default function Page({ params }) {
 
   return (
     <div className="container mt-4">
+      <style jsx global>{`
+        body {
+          margin: 0;
+          padding: 0;
+          background-image: url('https://static.vecteezy.com/system/resources/previews/028/663/748/non_2x/ai-ai-generatedrealistic-4k-sky-with-serene-cumulus-clouds-nature-s-atmospheric-beauty-in-stunning-detail-ideal-for-calming-and-scenic-concepts-free-photo.jpeg');
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+          font-family: 'Arial', sans-serif; /* Cambia la fuente según tus necesidades */
+        }
+      `}</style>
+      <div
+        className="container mt-4"
+        style={{
+          backgroundImage: `url('https://img.freepik.com/fotos-premium/fondo-cielo-azul-nubes-blancas_868292-1936.jpg?w=996')`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+        }}
+      >
+
+      </div>
       <nav className="navbar navbar-expand-lg">
         <div className="container-fluid">
           <Link href="/">
@@ -77,7 +106,7 @@ export default function Page({ params }) {
               src="https://cdn-icons-png.flaticon.com/512/2383/2383684.png"
               alt="Logo"
               className="navbar-brand"
-              style={{ width: "70px", height: "70px" }} // Ajusta el tamaño según tus necesidades
+              style={{ width: "70px", height: "70px" }}
             />
           </Link>
           <span className="navbar-text me-3 text-white fw-bold">Monitoreo Climático</span>
@@ -108,7 +137,7 @@ export default function Page({ params }) {
                 src="https://cdn.icon-icons.com/icons2/1369/PNG/512/-account-circle_89831.png"
                 alt="Icono Cuenta"
                 className="nav-link"
-                style={{ width: "70px", height: "70px" }} // Ajusta el tamaño según tus necesidades
+                style={{ width: "70px", height: "70px" }}
               />
             </Link>
           </div>
@@ -139,8 +168,8 @@ export default function Page({ params }) {
             onChange={(e) => setFiltroFecha(e.target.value)}
             max={isToday(new Date()) ? format(new Date(), "yyyy-MM-dd") : ""}
             style={{
-              backgroundColor: "#000000", // Cambiar color de fondo del calendario
-              color: "#ffffff", // Cambiar color del texto del calendario
+              backgroundColor: "#000000",
+              color: "#ffffff",
             }}
           />
           <button
@@ -154,63 +183,75 @@ export default function Page({ params }) {
             Buscar
           </button>
         </div>
-        <div className="row">
-          <div className="col-12 table-responsive">
-            {Object.keys(reportes).length > 0 ? (
-              <table
-                className="table table-hover table-bordered table-striped"
-                style={{
-                  backgroundColor: "#D3D3D3",
-                  fontSize: "18px",
-                  color: "#000000",
-                }}
-              >
-                <thead className="thead-dark">
-                  <tr>
-                    <th>ID</th>
-                    <th>Fecha</th>
-                    <th>Dato</th>
-                    <th>Tipo Dato</th>
-                    <th>Detalle</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {Object.keys(reportes).map((fechaAgrupada, index) => (
-                    <tr key={index}>
-                      <td>{index + 1}</td>
-                      <td>{fechaAgrupada}</td>
-                      <td>{reportes[fechaAgrupada].dato}</td>
-                      <td>{reportes[fechaAgrupada].tipo_dato}</td>
-
-                      <td>
-                        {reportes[fechaAgrupada].external_id && (
-                          <Link href={`reportes/${reportes[fechaAgrupada].fecha}`} passHref>
-                            <button
-                              className="btn"
-                              style={{
-                                backgroundColor: "#808080",
-                                color: "#ffffff", // Letras blancas
-                              }}
-                            >
-                              Ver detalle
-                            </button>
-                          </Link>
-                        )}
-                      </td>
+        <div className="overflow-auto border p-3 bg-black bg-opacity-10 text-white rounded">
+          <div className="row">
+            <div className="col-12 table-responsive">
+              {Object.keys(reportes).length > 0 ? (
+                <table
+                  className="table table-hover table-bordered table-striped"
+                  style={{
+                    backgroundColor: "#D3D3D3",
+                    fontSize: "18px",
+                    color: "#000000",
+                  }}
+                >
+                  <thead className="thead-dark">
+                    <tr>
+                      <th>ID</th>
+                      <th>Fecha</th>
+                      <th>Día</th> {/* Nuevo campo para mostrar el día */}
+                      <th>Dato</th>
+                      <th>Tipo Dato</th>
+                      <th>Detalle</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            ) : (
-              <p>
-                {sinResultados
-                  ? `No se encontraron reportes para la fecha ${filtroFecha}.`
-                  : "No se encontraron reportes."}
-              </p>
-            )}
+                  </thead>
+                  <tbody>
+                    {Object.keys(reportes).map((fechaAgrupada, index) => {
+                      const fechaReporte = new Date(fechaAgrupada);
+                      const fechaFormateada = format(fechaReporte, "EEEE, yyyy-MM-dd", {
+                        locale: esLocale,
+                      });
+                      const diaSemana = format(fechaReporte, "EEEE", {
+                        locale: esLocale,
+                      });
+
+                      return (
+                        <tr key={index}>
+                          <td>{index + 1}</td>
+                          <td>{fechaFormateada}</td>
+                          <td>{diaSemana}</td>
+                          <td>{reportes[fechaAgrupada].dato}</td>
+                          <td>{reportes[fechaAgrupada].tipo_dato}</td>
+
+                          <td>
+                            {reportes[fechaAgrupada].external_id && (
+                              <Link href={`reportes/${reportes[fechaAgrupada].fecha}`} passHref>
+                                <button
+                                  className="btn"
+                                  style={{
+                                    backgroundColor: "#808080",
+                                    color: "#ffffff", // Letras blancas
+                                  }}
+                                >
+                                  Ver detalle
+                                </button>
+                              </Link>
+                            )}
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              ) : (
+                <p>
+                </p>
+              )}
+            </div>
           </div>
         </div>
       </div>
     </div>
   );
 }
+

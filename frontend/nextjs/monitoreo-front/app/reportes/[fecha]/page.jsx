@@ -44,24 +44,81 @@ export default function Page({ params }) {
 
   return (
     <div className="container mt-4">
+      <style jsx global>{`
+        body {
+          margin: 0;
+          padding: 0;
+          background-image: url('https://static.vecteezy.com/system/resources/previews/028/663/748/non_2x/ai-ai-generatedrealistic-4k-sky-with-serene-cumulus-clouds-nature-s-atmospheric-beauty-in-stunning-detail-ideal-for-calming-and-scenic-concepts-free-photo.jpeg');
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+          font-family: 'Arial', sans-serif; /* Cambia la fuente según tus necesidades */
+        }
+      `}</style>
+      <nav className="navbar navbar-expand-lg">
+        <div className="container-fluid">
+          <Link href="/">
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/2383/2383684.png"
+              alt="Logo"
+              className="navbar-brand"
+              style={{ width: "70px", height: "70px" }} // Ajusta el tamaño según tus necesidades
+            />
+          </Link>
+          <span className="navbar-text me-3 text-white fw-bold">Monitoreo Climático</span>
+          <div className="navbar-nav ms-auto">
+            <div className="d-flex justify-content-center align-items-center">
+              <button
+                className="btn btn-outline-danger btn-sm"
+                style={{
+                  background: "transparent",
+                  color: "white",
+                  borderColor: "transparent",
+                  transition: "background-color 0.3s, color 0.3s",
+                }}
+                onMouseOver={(e) => {
+                  e.target.style.backgroundColor = "#004080";
+                  e.target.style.color = "lightgray";
+                }}
+                onMouseOut={(e) => {
+                  e.target.style.backgroundColor = "transparent";
+                  e.target.style.color = "white";
+                }}
+              >
+                Cerrar Sesión
+              </button>
+            </div>
+            <Link href="/">
+              <img
+                src="https://cdn.icon-icons.com/icons2/1369/PNG/512/-account-circle_89831.png"
+                alt="Icono Cuenta"
+                className="nav-link"
+                style={{ width: "70px", height: "70px" }} // Ajusta el tamaño según tus necesidades
+              />
+            </Link>
+          </div>
+        </div>
+      </nav>
       <Link href="/informes" passHref>
-      <button
-            className="btn btn-success"
-            style={{
-              backgroundColor: "#000000",
-              color: "#ffffff",
-            }}
-          >
-            Volver
-          </button>
+        <button
+          className="btn btn-success"
+          style={{
+            backgroundColor: "#000000",
+            color: "#ffffff",
+          }}
+        >
+          Volver
+        </button>
       </Link>
-      <h1 className="text-black">Reporte del día</h1>
+
+      <h1 className="text-white" style={{ fontFamily: 'Tahoma, sans-serif', fontWeight: 'bold' }}>Reporte del día</h1>
 
       {promedioHumedad !== null && (
-        <div className="text-black">
-          <p>Promedio de Humedad: {promedioHumedad}%</p>
+        <div className="text-black" style={{ fontFamily: 'Tahoma, sans-serif', ontWeight: 'bold' }}>
+          <p>Promedio del día : {promedioHumedad}%</p>
         </div>
       )}
+      <div className="overflow-auto border p-3 bg-black bg-opacity-10 text-white rounded">
 
       {reportes.length > 0 ? (
         <table
@@ -94,6 +151,7 @@ export default function Page({ params }) {
       ) : (
         <p>No hay reporte de ese día en especifico</p>
       )}
+    </div>
     </div>
   );
 }

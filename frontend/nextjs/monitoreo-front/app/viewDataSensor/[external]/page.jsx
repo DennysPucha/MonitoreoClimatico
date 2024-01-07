@@ -44,6 +44,17 @@ export default function Page({ params }) {
 
   return (
     <div className="container">
+       <style jsx global>{`
+        body {
+          margin: 0;
+          padding: 0;
+          background-image: url('https://static.vecteezy.com/system/resources/previews/028/663/748/non_2x/ai-ai-generatedrealistic-4k-sky-with-serene-cumulus-clouds-nature-s-atmospheric-beauty-in-stunning-detail-ideal-for-calming-and-scenic-concepts-free-photo.jpeg');
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+          font-family: 'Arial', sans-serif; /* Cambia la fuente según tus necesidades */
+        }
+      `}</style>
       <div className="row mt-3">
         <Link href="/sensores" passHref>
           <button className="btn btn-success">Volver</button>
