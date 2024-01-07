@@ -1,3 +1,4 @@
+import mensajes from "@/componentes/mensajes";
 import { enviar } from "./Conexion";
 import { save } from "./SessionUtil";
 
@@ -13,7 +14,7 @@ export async function inicioSesion(data) {
 
         return sesion;
     } catch (error) {
-        console.error('Error en la función inicioSesion:', error);
+        mensajes("Error", "Error al iniciar sesion, usuario o contraseña incorrectos", "success");
         throw error;
     }
 }

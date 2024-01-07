@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { obtenerTodo } from "@/hooks/Conexion";
 import { getToken, getExternalUser } from "@/hooks/SessionUtil";
+import Menu from "@/componentes/menu";
 
 export default function Page() {
   const [sensores, setsensores] = useState([]);
@@ -26,8 +27,11 @@ export default function Page() {
 
   return (
     <div className="container">
+      <header>
+        <Menu></Menu>
+      </header>
       <div className="col">
-        {/* Menú Superior */}
+
         <nav className="navbar navbar-expand-lg">
           <div className="container-fluid">
             <Link href="/">

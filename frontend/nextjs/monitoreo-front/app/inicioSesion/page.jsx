@@ -2,7 +2,7 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
-import mensajes from "@/componentes/Mensajes";
+import mensajes from "@/componentes/mensajes";
 import { useRouter } from "next/navigation";
 import { inicioSesion } from "@/hooks/inicio_sesion";
 import { borrarSesion, getRol } from "@/hooks/SessionUtil";
@@ -23,11 +23,12 @@ export default function InicioSesion() {
     const sendData = (data) => {
         const requestData = { correo: data.identificador, clave: data.clave };
         inicioSesion(requestData).then((info) => {
-            const rol = getRol();
-            console.log("el rol de la persona es", rol);
+            // const rol = getRol();
+            // console.log("el rol de la persona es", rol);
             if (info.code === 200) {
                 mensajes("Inicio Exitoso", "Bienvenido", "success");
-                router.push("/pronostico");
+                router.push("/sensores");
+
             } else {
                 mensajes("Error de Inicio", info.msg, "error");
             }
