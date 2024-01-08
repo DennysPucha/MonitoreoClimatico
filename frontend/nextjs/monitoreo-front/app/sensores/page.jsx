@@ -1,13 +1,10 @@
 "use client";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { enviar, obtenerTodo } from "@/hooks/Conexion";
+import { enviar, obtenerTodo, simple_enviar } from "@/hooks/Conexion";
 import { getToken, getExternalUser } from "@/hooks/SessionUtil";
 import mensajes from "@/componentes/mensajes";
-<<<<<<< HEAD
-=======
 import Menu from "@/componentes/menu";
->>>>>>> origin/Pronostico
 import swal from "sweetalert";
 
 export default function Page() {
@@ -54,15 +51,12 @@ export default function Page() {
     }).then(async (confirm) => {
       if (confirm) {
         try {
-          const response = await enviar(`/cambiar/estado/sensor/${externalId}`);
+          const token=getToken();
+          const response = await simple_enviar(`cambiar/estado/sensor/${externalId}`,token);
           console.log(response);
-
+          console.log(token);
           if (response.code === 200) {
             mensajes(successMessage, "success", "Realizado con éxito");
-<<<<<<< HEAD
-            // Actualizar el estado del sensor sin recargar la página
-=======
->>>>>>> origin/Pronostico
             setsensores((prevSensores) =>
               prevSensores.map((sensor) =>
                 sensor.external_id === externalId
@@ -82,12 +76,9 @@ export default function Page() {
 
   return (
     <div className="container">
-<<<<<<< HEAD
-=======
       <header>
         <Menu></Menu>
       </header>
->>>>>>> origin/Pronostico
       {/* ... (Código del navbar y otros elementos) ... */}
       <div className="container mt-5 d-flex flex-column justify-content-center align-items-center">
         <div className="row mt-3">
@@ -138,14 +129,8 @@ export default function Page() {
                             <td>
                               {sensor.external_id && (
                                 <button
-<<<<<<< HEAD
-                                  className={`btn ${
-                                    sensor.estado ? "btn-warning" : "btn-success"
-                                  }`}
-=======
                                   className={`btn ${sensor.estado ? "btn-warning" : "btn-success"
                                     }`}
->>>>>>> origin/Pronostico
                                   onClick={() =>
                                     desactivarSensor(
                                       sensor.external_id,

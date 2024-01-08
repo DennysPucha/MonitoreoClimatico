@@ -53,11 +53,7 @@ export default function Page({ params }) {
 
     return (
         <div style={{ minHeight: '50vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-<<<<<<< HEAD
-            <div className="card" style={{ width: '400px', padding: '15px', borderRadius: '10px' , backgroundColor: '#33B9FF' }}>
-=======
             <div className="card" style={{ width: '400px', padding: '15px', borderRadius: '10px', backgroundColor: '#33B9FF' }}>
->>>>>>> origin/Pronostico
                 <h2 className="text-center mb-4">Editar Sensor</h2>
                 <form className="user" onSubmit={handleSubmit(onSubmit)}>
                     <div className="form-outline mb-4">
