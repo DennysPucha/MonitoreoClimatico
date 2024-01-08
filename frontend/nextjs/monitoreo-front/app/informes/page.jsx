@@ -7,6 +7,7 @@ import { obtener, obtenerTodo } from "@/hooks/Conexion";
 import { getToken, getExternalUser } from "@/hooks/SessionUtil";
 import { format, subDays } from "date-fns";
 import esLocale from "date-fns/locale/es";
+import Menu from "@/componentes/menu";
 import mensajes from "@/componentes/mensajes";
 
 export default function Page() {
@@ -35,19 +36,7 @@ export default function Page() {
 
   return (
     <div className="container mt-4">
-      <style jsx global>{`
-        body {
-          margin: 0;
-          padding: 0;
-          background-image: url('https://static.vecteezy.com/system/resources/previews/028/663/748/non_2x/ai-ai-generatedrealistic-4k-sky-with-serene-cumulus-clouds-nature-s-atmospheric-beauty-in-stunning-detail-ideal-for-calming-and-scenic-concepts-free-photo.jpeg');
-          background-size: cover;
-          background-position: center;
-          background-repeat: no-repeat;
-          font-family: 'Arial', sans-serif; /* Cambia la fuente según tus necesidades */
-        }
-      `}</style>
-        
-      <div className="d-flex flex-column align-items-center">
+      <header>
         <nav className="navbar navbar-expand-lg">
           <div className="container-fluid">
             <Link href="/">
@@ -55,7 +44,7 @@ export default function Page() {
                 src="https://cdn-icons-png.flaticon.com/512/2383/2383684.png"
                 alt="Logo"
                 className="navbar-brand"
-                style={{ width: "70px", height: "70px" }} 
+                style={{ width: "70px", height: "70px" }}
               />
             </Link>
             <span className="navbar-text me-3 text-white fw-bold">Monitoreo Climático</span>
@@ -86,47 +75,62 @@ export default function Page() {
                   src="https://cdn.icon-icons.com/icons2/1369/PNG/512/-account-circle_89831.png"
                   alt="Icono Cuenta"
                   className="nav-link"
-                  style={{ width: "70px", height: "70px" }} 
+                  style={{ width: "70px", height: "70px" }}
                 />
               </Link>
             </div>
           </div>
-          <Link href="/informes" passHref>
-                    <button
-                        className="btn btn-success"
-                        style={{
-                            backgroundColor: "#D6DBDF", 
-                            color: "#004080", 
-                            borderColor: "#D6DBDF", 
-                        }}
-                    >
-                        Volver
-                    </button>
-                </Link>
+          <Link href="/principal" passHref>
+            <button
+              className="btn btn-success"
+              style={{
+                backgroundColor: "#D6DBDF",
+                color: "#004080",
+                borderColor: "#D6DBDF",
+              }}
+            >
+              Volver
+            </button>
+          </Link>
         </nav>
+      </header>
+      <style jsx global>{`
+        body {
+          margin: 0;
+          padding: 0;
+          background-image: url('https://static.vecteezy.com/system/resources/previews/028/663/748/non_2x/ai-ai-generatedrealistic-4k-sky-with-serene-cumulus-clouds-nature-s-atmospheric-beauty-in-stunning-detail-ideal-for-calming-and-scenic-concepts-free-photo.jpeg');
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+          font-family: 'Arial', sans-serif; /* Cambia la fuente según tus necesidades */
+        }
+      `}</style>
+
+      <div className="d-flex flex-column align-items-center">
+        { }
         <h1 className="text-white">Historial</h1>
 
         <div className="mb-3">
-  <label htmlFor="filtroFecha" className="mr-2">
-    Selecciona una fecha:
-  </label>
-  <DatePicker
-    selected={selectedDate}
-    onChange={(date) => setSelectedDate(date)}
-    dateFormat="dd/MM/yyyy"
-    locale="es"
-    maxDate={new Date()} 
-  />
-</div>
-  
+          <label htmlFor="filtroFecha" className="mr-2">
+            Selecciona una fecha:
+          </label>
+          <DatePicker
+            selected={selectedDate}
+            onChange={(date) => setSelectedDate(date)}
+            dateFormat="dd/MM/yyyy"
+            locale="es"
+            maxDate={new Date()}
+          />
+        </div>
+
 
         <button
           className="btn btn-primary"
           onClick={() => consultarAPI()}
           style={{
-            backgroundColor: "transparent", 
+            backgroundColor: "transparent",
             color: "#F0FFFF",
-            border: "none", 
+            border: "none",
           }}
         >
           Buscar en la fecha
@@ -155,9 +159,9 @@ export default function Page() {
                         <button
                           className="btn btn-primary"
                           style={{
-                            backgroundColor: "#D6DBDF", 
-                            color: "#004080", 
-                            border: "none", 
+                            backgroundColor: "#D6DBDF",
+                            color: "#004080",
+                            border: "none",
                           }}
                         >
                           ver detalle

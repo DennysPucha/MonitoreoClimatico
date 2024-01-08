@@ -53,6 +53,10 @@ class ReporteControl {
                     return res.json({ message: "Error de solicitud", tag: "Sensor no existente", code: 400 });
                 }
 
+                if (!sensorA.estado) {
+                    res.status(403); 
+                    return res.json({ message: "Operación prohibida. El sensor está desactivado.", code: 403 });
+                }
 
 
                 const data = {
@@ -105,16 +109,22 @@ class ReporteControl {
                 const reporteA = await models.reporte.findOne({where: {external_id:external} })
             
                 const sensorA = await models.sensor.findOne({ where: { external_id: req.body.sensor} });
-            
+                
                 if (!sensorA) {
                     res.status(400);
                     return res.json({ msg: "ERROR", tag: "Sensor no existente", code: 400 });
                 }
+
+
                 if (!reporteA) {
                     res.status(400);
                     return res.json({ msg: "ERROR", tag: "Reporte no existente", code: 400 });
                 }
             
+                if (!sensorA.estado) {
+                    res.status(403); 
+                    return res.json({ message: "Operación prohibida. El sensor está desactivado.", code: 403 });
+                }
                 const data = {
                     fecha: req.body.fecha,
                     dato: req.body.dato,

@@ -27,94 +27,51 @@ export default function Page({ params }) {
     }
   };
 
-  const handleBuscarPorRangoHoras = async () => {
-    const token = getToken();
-
-    try {
-      const response = await obtenerTodo(
-        `buscar/reporte?external=${external}&horaInicio=${horaInicio}&horaFin=${horaFin}`,
-        token
-      );
-      setReportes(response.data.reporte);
-      console.log(response);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  return (
-    <div className="container">
-       <style jsx global>{`
-        body {
-          margin: 0;
-          padding: 0;
-          background-image: url('https://static.vecteezy.com/system/resources/previews/028/663/748/non_2x/ai-ai-generatedrealistic-4k-sky-with-serene-cumulus-clouds-nature-s-atmospheric-beauty-in-stunning-detail-ideal-for-calming-and-scenic-concepts-free-photo.jpeg');
-          background-size: cover;
-          background-position: center;
-          background-repeat: no-repeat;
-          font-family: 'Arial', sans-serif; /* Cambia la fuente según tus necesidades */
-        }
-      `}</style>
-      <div className="row mt-3">
-        <Link href="/sensores" passHref>
-          <button className="btn btn-success">Volver</button>
-        </Link>
-        <div className="col text-center">
-          <div className="bg-primary p-3">
-            <h1 className="text-white">Reportes del sensor</h1>
-          </div>
-          <div className="mt-3">
-            <div
-              className="overflow-auto border p-3 bg-black bg-opacity-10 text-white rounded"
-              style={{ maxHeight: "300px" }} 
-            >
-              <div className="mb-3">
-                <label htmlFor="horaInicio" className="me-2">
-                  Hora de inicio:
-                </label>
-                <input
-                  type="time"
-                  id="horaInicio"
-                  value={horaInicio}
-                  onChange={(e) => setHoraInicio(e.target.value)}
-                />
-                <label htmlFor="horaFin" className="mx-2">
-                  Hora de fin:
-                </label>
-                <input
-                  type="time"
-                  id="horaFin"
-                  value={horaFin}
-                  onChange={(e) => setHoraFin(e.target.value)}
-                />
-                <button className="btn btn-primary ms-2" onClick={handleBuscarPorRangoHoras}>
-                  Buscar por Rango de Horas
-                </button>
-              </div>
-              {Array.isArray(reportes) && reportes.length > 0 ? (
-                <div>
-                  <table className="table">
-                    <thead>
-                      <tr>
-                        <th>Nro</th>
-                        <th>Fecha</th>
-                        <th>Hora Registro</th>
-                        <th>Dato</th>
-                        <th>Tipo Dato</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {reportes.map((reporte, index) => (
-                        <tr key={index}>
-                          <td>{index + 1}</td>
-                          <td>{reporte.fecha}</td>
-                          <td>{reporte.hora_registro}</td>
-                          <td>{reporte.dato}</td>
-                          <td>{reporte.tipo_dato}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
+    return (
+        <div className="container">
+            <div className="row mt-3">
+            <Link href="/sensores" passHref>
+                <button className="btn btn-success">Volver</button>
+            </Link>
+                <div className="col text-center">
+                    <div className="bg-primary p-3">
+                        <h1 className="text-white">Reportes del sensor</h1>
+                    </div>
+                    <div className="mt-3">
+                        <div
+                            className="overflow-auto border p-3 bg-black bg-opacity-10 text-white rounded"
+                            style={{ maxHeight: "300px" }}
+                        >
+                            {Array.isArray(reportes) && reportes.length > 0 ? (
+                                <div>
+                                    <table className="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Nro</th>
+                                                <th>Fecha</th>
+                                                <th>Hora Registro</th>
+                                                <th>Dato</th>
+                                                <th>Tipo Dato</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {reportes.map((reporte, index) => (
+                                                <tr key={index}>
+                                                    <td>{index + 1}</td>
+                                                    <td>{reporte.fecha}</td>
+                                                    <td>{reporte.hora_registro}</td>
+                                                    <td>{reporte.dato}</td>
+                                                    <td>{reporte.tipo_dato}</td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            ) : (
+                                <p>No se encontraron reportes</p>
+                            )}
+                        </div>
+                    </div>
                 </div>
               ) : (
                 <p>No se encontraron reportes</p>
