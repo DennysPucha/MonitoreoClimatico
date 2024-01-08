@@ -1,5 +1,6 @@
 var createError = require('http-errors');
 var express = require('express');
+const cors = require('cors');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
@@ -9,7 +10,7 @@ var usersRouter = require('./routes/users');
 
 var app = express();
 
-// view engine setup
+app.use(cors({ origin: '*' })); 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
@@ -20,7 +21,16 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/monitoreo', usersRouter);
+
+console.log("Ruta de modelos:", path.resolve(__dirname, 'app', 'models'));
+let models = require('./app/models');
+models.sequelize.sync({ force: false, logging: false }).then(() => { //drop
+  console.log("Se ha sincronizado la base de datos");
+}).catch(err => {
+  console.log(err, 'Hubo un error al sincronizar la base de datos');
+});
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
