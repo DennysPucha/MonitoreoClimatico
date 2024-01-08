@@ -2,6 +2,7 @@
 import ChartComponent from '@/componentes/grafica';
 import React, { useState, useEffect } from 'react';
 import { useRouter } from "next/navigation";
+import MenuInicio from '@/componentes/menuInicio';
 
 
 
@@ -53,7 +54,12 @@ const Page = () => {
     };
 
     return (
-        <div style={styles.container}>
+        <div style={styles.container} className="overflow-auto p-3 bg-black bg-opacity-10 text-white rounded">
+            <header>
+                <MenuInicio>
+
+                </MenuInicio>
+            </header>
             <header style={styles.header}>
                 <h1 style={styles.title}>Bienvenido a nuestra Página Principal</h1>
                 <h1>
@@ -68,11 +74,12 @@ const Page = () => {
                     {renderMoteCard('Mote 2', data.mote2)}
                     {renderMoteCard('Mote 3', data.mote3)}
                 </div>
-                <ChartComponent></ChartComponent>
+                <div style={{ display: 'flex', alignItems: 'center', height: '46vh' }}>
+                    <ChartComponent></ChartComponent>
+                </div>
                 <p></p>
                 <button style={styles.button} onClick={handleUpdateChart}>Ver detalles</button>
             </section>
-
         </div>
     );
 };
@@ -90,7 +97,7 @@ const styles = {
     title: {
         fontSize: '36px',
         fontWeight: 'bold',
-        color: '#333',
+        color: 'white',
     },
     mainSection: {
         maxWidth: '600px',
@@ -98,18 +105,18 @@ const styles = {
     },
     moteContainer: {
         display: 'flex',
-        flexDirection: 'row',  // Cambiado a fila
+        flexDirection: 'row',
         justifyContent: 'space-between',
         marginBottom: '20px',
     },
     moteCard: {
         flex: '1',
-        maxWidth: '200px',  // Ajusta el ancho según tus necesidades
+        maxWidth: '200px',
         padding: '20px',
         marginBottom: '20px',
         border: '1px solid #ccc',
         borderRadius: '8px',
-        backgroundColor: '#fff',
+        backgroundColor: '#0004',
         boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
     },
     button: {

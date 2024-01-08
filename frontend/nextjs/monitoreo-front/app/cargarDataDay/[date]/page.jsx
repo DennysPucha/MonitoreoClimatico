@@ -1,12 +1,16 @@
 "use client";
 import { useEffect, useState } from "react";
-import Link from "next/link";
-import { obtenerTodo } from "@/hooks/Conexion";
+import Menu from "@/componentes/menu";
+import { obtener } from "@/hooks/Conexion";
 import { getToken, getExternalUser } from "@/hooks/SessionUtil";
+import Link from "next/link";
+
 
 export default function Page({ params }) {
-    const { external } = params;
-    const [reportes, setreportes] = useState([]);
+    const { date } = params;
+
+    const [reportes, setReportes] = useState([]);
+    const [tipoDatoFiltro, setTipoDatoFiltro] = useState("HUMEDAD"); // Tipo de dato por defecto
 
     useEffect(() => {
         const fetchData = async () => {
@@ -14,8 +18,8 @@ export default function Page({ params }) {
             const externalUser = getExternalUser();
 
             try {
-                const response = await obtenerTodo(`obtener/sensorReportes/${external}`, token);
-                setreportes(response.data.reporte);
+                const response = await obtener(`buscarporFechaYTipoDato/reportes?fecha=${date}&tipo_dato=${tipoDatoFiltro}`);
+                setReportes(response.data);
                 console.log(response);
             } catch (error) {
                 console.error(error);
@@ -23,19 +27,33 @@ export default function Page({ params }) {
         };
 
         fetchData();
-    }, []);
+    }, [date, tipoDatoFiltro]);
+
+    const handleTipoDatoChange = (e) => {
+        setTipoDatoFiltro(e.target.value);
+    };
 
     return (
         <div className="container">
+            <header>
+                <Menu></Menu>
+            </header>
             <div className="row mt-3">
-            <Link href="/sensores" passHref>
-                <button className="btn btn-success">Volver</button>
-            </Link>
+                {/* <Link href="/informes" passHref>
+                    <button className="btn btn-success">Volver</button>
+                </Link> */}
                 <div className="col text-center">
-                    <div className="bg-primary p-3">
+                    <div className="overflow-auto border p-3 bg-black bg-opacity-10 text-white rounded" >
                         <h1 className="text-white">Reportes del sensor</h1>
                     </div>
                     <div className="mt-3">
+                        {/* Filtro por tipo de dato */}
+                        <select value={tipoDatoFiltro} onChange={handleTipoDatoChange} className="form-control mb-3">
+                            <option value="TEMPERATURA">Temperatura</option>
+                            <option value="HUMEDAD">Humedad</option>
+                            <option value="PRESION_ATMOSFERICA">Presión Atmosférica</option>
+                        </select>
+
                         <div
                             className="overflow-auto border p-3 bg-black bg-opacity-10 text-white rounded"
                             style={{ maxHeight: "300px" }}
@@ -73,6 +91,5 @@ export default function Page({ params }) {
                 </div>
             </div>
         </div>
-
     );
 }

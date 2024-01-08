@@ -1,22 +1,22 @@
 
 export const save = (key, data) => {
-    sessionStorage.setItem(key, data);
+  sessionStorage.setItem(key, data);
 };
 
 export const get = (key) => {
-    return sessionStorage.getItem(key);
+  return sessionStorage.getItem(key);
 };
 
 export const saveToken = (key) => {
-    return sessionStorage.setItem("token", key);
+  return sessionStorage.setItem("token", key);
 };
 
 export const getToken = () => {
-    return sessionStorage.getItem("token");
+  return sessionStorage.getItem("token");
 };
 
 export const borrarSesion = () => {
-    sessionStorage.clear();
+  sessionStorage.clear();
 };
 
 export const saveExternalUser = (externalUser) => {
@@ -24,12 +24,12 @@ export const saveExternalUser = (externalUser) => {
 };
 
 export const getExternalUser = () => {
-  var sesion=sessionStorage.getItem('externalUser')
+  var sesion = sessionStorage.getItem('external_id')
   return sesion;
 };
 
 export const getRolUsuario = () => {
-  var sesion=sessionStorage.getItem('rol')
+  var sesion = sessionStorage.getItem('rol')
   return sesion;
 };
 

@@ -1,4 +1,8 @@
-export default function Menu() {
+import Link from "next/link";
+
+
+export default function MenuInicio() {
+
     return (
         <nav className="navbar navbar-expand-lg navbar-light" style={{ backgroundColor: 'rgba(255, 255, 255, 0.0)' }}>
             <div className="container-fluid">
@@ -22,29 +26,30 @@ export default function Menu() {
                 <div className="collapse navbar-collapse" id="navbarNav">
                     <ul className="navbar-nav ml-auto">
                         <li className="nav-item">
-                            <a className="nav-link" href="../inicioSesion" style={{ color: 'white', fontSize: '20px' }}>
-                                Cerrar sesión
-                            </a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="../informes" style={{ color: 'white', fontSize: '20px' }}>
-                                Historial
-                            </a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="../sensores" style={{ color: 'white', fontSize: '20px' }}>
-                                Sensores
-                            </a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="../pronostico" style={{ color: 'white', fontSize: '20px' }}>
-                                Pronostico
-                            </a>
+                            <h>
+                                Monitoreo climático
+                            </h>
                         </li>
                     </ul>
                 </div>
 
-                {/* Imagen al final del menú */}
+                <div className="navbar-nav ml-auto">
+                    <li className="nav-item">
+                        <a className="nav-link" href="../agregar" style={{ color: 'white', fontSize: '20px' }}>
+                            <Link href="/informes" passHref>
+                                <button className="btn btn-success">Ver historial</button>
+                            </Link>
+                        </a>
+                    </li>
+                    <li className="nav-item">
+                        <a className="nav-link" href="../agregar" style={{ color: 'white', fontSize: '20px' }}>
+                            <Link href="/inicioSesion" passHref>
+                                <button className="btn btn-success">Iniciar sesion</button>
+                            </Link>
+                        </a>
+                    </li>
+                </div>
+
                 <a className="navbar-brand" href="/ruta/de/tu/imagen-fin.png">
                     <img src="https://cdn.icon-icons.com/icons2/1369/PNG/512/-account-circle_89831.png" alt="Fin" height="50" />
                 </a>
