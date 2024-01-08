@@ -15,7 +15,7 @@ export async function obtenerTodo(recurso, token) {
   const headers = {
     Accept: "application/json",
     "content-type": "application/json",
-    "token-autos": token,
+    "token-monitoreo": token,
   };
 
   const response = await fetch(URL + recurso, {
@@ -27,11 +27,11 @@ export async function obtenerTodo(recurso, token) {
 }
 
 
-export async function enviar(recurso, data,token) {
+export async function enviar(recurso, data, token) {
   const headers = {
     "Accept": "application/json",
     "Content-Type": "application/json",
-    "token-autos": token,
+    "token-monitoreo": token,
   };
   const response = await fetch(URL + recurso, {
     method: "POST",
@@ -44,7 +44,7 @@ export async function enviar(recurso, data,token) {
 
 export async function enviarArchivos(recurso, formData, token) {
   const headers = {
-    "token-autos": token,
+    "token-monitoreo": token,
   };
 
   const response = await fetch(URL + recurso, {

@@ -4,6 +4,10 @@ import Link from "next/link";
 import { enviar, obtenerTodo } from "@/hooks/Conexion";
 import { getToken, getExternalUser } from "@/hooks/SessionUtil";
 import mensajes from "@/componentes/mensajes";
+<<<<<<< HEAD
+=======
+import Menu from "@/componentes/menu";
+>>>>>>> origin/Pronostico
 import swal from "sweetalert";
 
 export default function Page() {
@@ -55,7 +59,10 @@ export default function Page() {
 
           if (response.code === 200) {
             mensajes(successMessage, "success", "Realizado con éxito");
+<<<<<<< HEAD
             // Actualizar el estado del sensor sin recargar la página
+=======
+>>>>>>> origin/Pronostico
             setsensores((prevSensores) =>
               prevSensores.map((sensor) =>
                 sensor.external_id === externalId
@@ -75,11 +82,17 @@ export default function Page() {
 
   return (
     <div className="container">
+<<<<<<< HEAD
+=======
+      <header>
+        <Menu></Menu>
+      </header>
+>>>>>>> origin/Pronostico
       {/* ... (Código del navbar y otros elementos) ... */}
       <div className="container mt-5 d-flex flex-column justify-content-center align-items-center">
         <div className="row mt-3">
           <div className="col text-center">
-            <div className="bg-primary p-3">
+            <div className="overflow-auto border p-3 bg-black bg-opacity-10 text-white rounded">
               <h1 className="text-white">Nodos Sensores</h1>
             </div>
             <div className="mt-3">
@@ -88,8 +101,8 @@ export default function Page() {
                 style={{ maxHeight: "300px" }}
               >
                 {Array.isArray(sensores) && sensores.length > 0 ? (
-                  <div>
-                    <table className="table">
+                  <div >
+                    <table className="table" >
                       <thead>
                         <tr>
                           <th>Nro</th>
@@ -125,9 +138,14 @@ export default function Page() {
                             <td>
                               {sensor.external_id && (
                                 <button
+<<<<<<< HEAD
                                   className={`btn ${
                                     sensor.estado ? "btn-warning" : "btn-success"
                                   }`}
+=======
+                                  className={`btn ${sensor.estado ? "btn-warning" : "btn-success"
+                                    }`}
+>>>>>>> origin/Pronostico
                                   onClick={() =>
                                     desactivarSensor(
                                       sensor.external_id,

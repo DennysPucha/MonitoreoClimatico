@@ -1,8 +1,16 @@
 "use client";
 import { useEffect, useState } from "react";
+<<<<<<< HEAD
 import Link from "next/link";
 import { obtener } from "@/hooks/Conexion";
 import { getToken, getExternalUser } from "@/hooks/SessionUtil";
+=======
+import Menu from "@/componentes/menu";
+import { obtener } from "@/hooks/Conexion";
+import { getToken, getExternalUser } from "@/hooks/SessionUtil";
+import Link from "next/link";
+
+>>>>>>> origin/Pronostico
 
 export default function Page({ params }) {
     const { date } = params;
@@ -33,12 +41,24 @@ export default function Page({ params }) {
 
     return (
         <div className="container">
+<<<<<<< HEAD
             <div className="row mt-3">
                 <Link href="/informes" passHref>
                     <button className="btn btn-success">Volver</button>
                 </Link>
                 <div className="col text-center">
                     <div className="bg-primary p-3">
+=======
+            <header>
+                <Menu></Menu>
+            </header>
+            <div className="row mt-3">
+                {/* <Link href="/informes" passHref>
+                    <button className="btn btn-success">Volver</button>
+                </Link> */}
+                <div className="col text-center">
+                    <div className="overflow-auto border p-3 bg-black bg-opacity-10 text-white rounded" >
+>>>>>>> origin/Pronostico
                         <h1 className="text-white">Reportes del sensor</h1>
                     </div>
                     <div className="mt-3">

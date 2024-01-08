@@ -1,8 +1,5 @@
-import { Inter } from 'next/font/google';
-import 'bootstrap/dist/css/bootstrap.css';
 import { estaSesion } from '@/hooks/SessionUtil';
-
-const inter = Inter({ subsets: ['latin'] });
+import 'bootstrap/dist/css/bootstrap.css';
 
 export const metadata = {
   title: 'Create Next App',
@@ -14,7 +11,7 @@ export default function RootLayout({ children }) {
 
   return (
     <html lang="en" style={{ height: '100%' }}>
-      <body className="bg-primary text-white">
+      <body style={{ backgroundImage: 'url("https://static.vecteezy.com/system/resources/previews/028/663/748/non_2x/ai-ai-generatedrealistic-4k-sky-with-serene-cumulus-clouds-nature-s-atmospheric-beauty-in-stunning-detail-ideal-for-calming-and-scenic-concepts-free-photo.jpeg")', backgroundSize: 'cover' }} className="bg-primary text-white">
         <section className="container-fluid flex-grow-1">
           {children}
         </section>
