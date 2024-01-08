@@ -199,6 +199,40 @@ class SensorControl {
         }
     }
 
+    async cambiarEstadoSensor(req, res) {
+        const external = req.params.external;
+    
+        try {
+            const sensorA = await models.sensor.findOne({ where: { external_id: external } });
+    
+            if (!sensorA) {
+                res.status(404);
+                return res.json({ message: "Sensor no encontrado", code: 404, data: {} });
+            }
+    
+            const transaction = await models.sequelize.transaction();
+    
+            try {
+                const nuevoEstado = !sensorA.estado;
+    
+                await sensorA.update({ estado: nuevoEstado }, { transaction });
+    
+                await transaction.commit();
+    
+                res.status(200);
+                res.json({ message: "Estado del sensor cambiado con éxito", code: 200, nuevoEstado });
+            } catch (error) {
+                if (transaction) await transaction.rollback();
+    
+                res.status(500);
+                res.json({ message: "Error interno del servidor", code: 500, error: error.message });
+            }
+        } catch (error) {
+            res.status(500);
+            res.json({ message: "Error interno del servidor", code: 500, error: error.message });
+        }
+    }
+
 }
 
 module.exports = SensorControl;

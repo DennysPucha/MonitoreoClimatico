@@ -1,8 +1,10 @@
 "use client";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { obtenerTodo } from "@/hooks/Conexion";
+import { enviar, obtenerTodo } from "@/hooks/Conexion";
 import { getToken, getExternalUser } from "@/hooks/SessionUtil";
+import mensajes from "@/componentes/mensajes";
+import swal from "sweetalert";
 
 export default function Page() {
   const [sensores, setsensores] = useState([]);
@@ -24,55 +26,56 @@ export default function Page() {
     fetchData();
   }, []);
 
+  const desactivarSensor = async (externalId, estado) => {
+    const confirmMessage = estado
+      ? "¿Deseas desactivar el sensor?"
+      : "¿Deseas activar el sensor?";
+
+    const successMessage = estado
+      ? "Sensor desactivado con éxito"
+      : "Sensor activado con éxito";
+
+    const errorMessage = estado
+      ? "Algo salió mal al desactivar el sensor"
+      : "Algo salió mal al activar el sensor";
+
+    swal({
+      title: confirmMessage,
+      text: estado
+        ? "Una vez desactivado, el sensor no podrá recopilar datos"
+        : "Una vez activado, el sensor comenzará a recopilar datos",
+      icon: "warning",
+      buttons: ["Cancelar", estado ? "Desactivar" : "Activar"],
+      dangerMode: true,
+    }).then(async (confirm) => {
+      if (confirm) {
+        try {
+          const response = await enviar(`/cambiar/estado/sensor/${externalId}`);
+          console.log(response);
+
+          if (response.code === 200) {
+            mensajes(successMessage, "success", "Realizado con éxito");
+            // Actualizar el estado del sensor sin recargar la página
+            setsensores((prevSensores) =>
+              prevSensores.map((sensor) =>
+                sensor.external_id === externalId
+                  ? { ...sensor, estado: !estado }
+                  : sensor
+              )
+            );
+          } else {
+            mensajes(errorMessage, "error", "ERROR");
+          }
+        } catch (error) {
+          console.error("Error en la solicitud:", error);
+        }
+      }
+    });
+  };
+
   return (
     <div className="container">
-      <div className="col">
-        {/* Menú Superior */}
-        <nav className="navbar navbar-expand-lg">
-          <div className="container-fluid">
-            <Link href="/">
-              <img
-                src="https://cdn-icons-png.flaticon.com/512/2383/2383684.png"
-                alt="Logo"
-                className="navbar-brand"
-                style={{ width: "70px", height: "70px" }}
-              />
-            </Link>
-            <span className="navbar-text me-3 text-white fw-bold">Monitoreo Climático</span>
-            <div className="navbar-nav ms-auto">
-              <div className="d-flex justify-content-center align-items-center">
-                <button
-                  className="btn btn-outline-danger btn-sm"
-                  style={{
-                    background: "transparent",
-                    color: "white",
-                    borderColor: "transparent",
-                    transition: "background-color 0.3s, color 0.3s",
-                  }}
-                  onMouseOver={(e) => {
-                    e.target.style.backgroundColor = "#004080";
-                    e.target.style.color = "lightgray";
-                  }}
-                  onMouseOut={(e) => {
-                    e.target.style.backgroundColor = "transparent";
-                    e.target.style.color = "white";
-                  }}
-                >
-                  Cerrar Sesión
-                </button>
-              </div>
-              <Link href="/">
-                <img
-                  src="https://cdn.icon-icons.com/icons2/1369/PNG/512/-account-circle_89831.png"
-                  alt="Icono Cuenta"
-                  className="nav-link"
-                  style={{ width: "70px", height: "70px" }}
-                />
-              </Link>
-            </div>
-          </div>
-        </nav>
-      </div>
+      {/* ... (Código del navbar y otros elementos) ... */}
       <div className="container mt-5 d-flex flex-column justify-content-center align-items-center">
         <div className="row mt-3">
           <div className="col text-center">
@@ -82,7 +85,7 @@ export default function Page() {
             <div className="mt-3">
               <div
                 className="overflow-auto border p-3 bg-black bg-opacity-10 text-white rounded"
-                style={{ maxHeight: "300px" }} 
+                style={{ maxHeight: "300px" }}
               >
                 {Array.isArray(sensores) && sensores.length > 0 ? (
                   <div>
@@ -95,6 +98,7 @@ export default function Page() {
                           <th>Estado</th>
                           <th>Datos</th>
                           <th>Editar</th>
+                          <th>Desactivar</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -118,6 +122,25 @@ export default function Page() {
                                 </Link>
                               )}
                             </td>
+                            <td>
+                              {sensor.external_id && (
+                                <button
+                                  className={`btn ${
+                                    sensor.estado ? "btn-warning" : "btn-success"
+                                  }`}
+                                  onClick={() =>
+                                    desactivarSensor(
+                                      sensor.external_id,
+                                      sensor.estado
+                                    )
+                                  }
+                                >
+                                  {sensor.estado
+                                    ? "Desactivar Sensor"
+                                    : "Activar Sensor"}
+                                </button>
+                              )}
+                            </td>
                           </tr>
                         ))}
                       </tbody>
@@ -129,14 +152,9 @@ export default function Page() {
               </div>
             </div>
             <div className="mt-3">
-
               <Link href="/newSensor" passHref>
                 <button className="btn btn-success me-2">Añadir Sensor</button>
               </Link>
-              <Link href="/changeSensor" passHref>
-                <button className="btn btn-warning">Desactivar Sensor</button>
-              </Link>
-
             </div>
           </div>
         </div>

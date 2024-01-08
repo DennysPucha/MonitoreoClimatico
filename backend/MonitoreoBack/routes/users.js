@@ -72,7 +72,7 @@ router.get('/obtener/sensorReportes/:external', sensorController.obtenerReportes
 router.get('/listar/sensores', sensorController.listar);
 router.post('/modificar/sensor/:external', sensorController.modificar);
 router.post('/guardar/sensor', sensorController.guardar);
-
+router.post('/cambiar/estado/sensor/:external',sensorController.cambiarEstadoSensor);
 
 router.get('/listar/reportes', reporteControler.listar);
 router.post('/modificar/reporte/:external', reporteControler.modificar);
