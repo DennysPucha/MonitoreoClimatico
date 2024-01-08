@@ -16,7 +16,6 @@ export default function Page() {
   const [selectedDate, setSelectedDate] = useState(new Date());
 
   useEffect(() => {
-    const sesionActiva = estaSesion();
     const fechaSeleccionada = format(selectedDate, "yyyy-MM-dd", { locale: esLocale });
 
     const consultarAPI = async () => {
@@ -38,26 +37,7 @@ export default function Page() {
   return (
     <div className="container mt-4">
       <header>
-        {sesionActiva ? (
-          <MenuInicio />
-        ) : (
-          <MenuNoSesion /> // Reemplaza con el nombre correcto de tu componente de menú sin sesión
-        )}
-      </header>
-      <style jsx global>{`
-        body {
-          margin: 0;
-          padding: 0;
-          background-image: url('https://static.vecteezy.com/system/resources/previews/028/663/748/non_2x/ai-ai-generatedrealistic-4k-sky-with-serene-cumulus-clouds-nature-s-atmospheric-beauty-in-stunning-detail-ideal-for-calming-and-scenic-concepts-free-photo.jpeg');
-          background-size: cover;
-          background-position: center;
-          background-repeat: no-repeat;
-          font-family: 'Arial', sans-serif; /* Cambia la fuente según tus necesidades */
-        }
-      `}</style>
-
-      <div className="d-flex flex-column align-items-center">
-        {/* <nav className="navbar navbar-expand-lg">
+        <nav className="navbar navbar-expand-lg">
           <div className="container-fluid">
             <Link href="/">
               <img
@@ -100,7 +80,7 @@ export default function Page() {
               </Link>
             </div>
           </div>
-          <Link href="/informes" passHref>
+          <Link href="/principal" passHref>
             <button
               className="btn btn-success"
               style={{
@@ -112,7 +92,22 @@ export default function Page() {
               Volver
             </button>
           </Link>
-        </nav> */}
+        </nav>
+      </header>
+      <style jsx global>{`
+        body {
+          margin: 0;
+          padding: 0;
+          background-image: url('https://static.vecteezy.com/system/resources/previews/028/663/748/non_2x/ai-ai-generatedrealistic-4k-sky-with-serene-cumulus-clouds-nature-s-atmospheric-beauty-in-stunning-detail-ideal-for-calming-and-scenic-concepts-free-photo.jpeg');
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+          font-family: 'Arial', sans-serif; /* Cambia la fuente según tus necesidades */
+        }
+      `}</style>
+
+      <div className="d-flex flex-column align-items-center">
+        { }
         <h1 className="text-white">Historial</h1>
 
         <div className="mb-3">
