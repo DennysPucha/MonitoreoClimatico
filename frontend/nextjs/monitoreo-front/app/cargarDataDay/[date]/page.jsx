@@ -8,7 +8,7 @@ export default function Page({ params }) {
     const { date } = params;
 
     const [reportes, setReportes] = useState([]);
-    const [tipoDatoFiltro, setTipoDatoFiltro] = useState("HUMEDAD"); // Tipo de dato por defecto
+    const [tipoDatoFiltro, setTipoDatoFiltro] = useState("HUMEDAD"); 
 
     useEffect(() => {
         const fetchData = async () => {
@@ -34,13 +34,84 @@ export default function Page({ params }) {
     return (
         <div className="container">
             <div className="row mt-3">
-                <Link href="/informes" passHref>
-                    <button className="btn btn-success">Volver</button>
-                </Link>
-                <div className="col text-center">
-                    <div className="bg-primary p-3">
-                        <h1 className="text-white">Reportes del sensor</h1>
+
+                <style jsx global>{`
+        body {
+          margin: 0;
+          padding: 0;
+          background-image: url('https://static.vecteezy.com/system/resources/previews/028/663/748/non_2x/ai-ai-generatedrealistic-4k-sky-with-serene-cumulus-clouds-nature-s-atmospheric-beauty-in-stunning-detail-ideal-for-calming-and-scenic-concepts-free-photo.jpeg');
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+          font-family: 'Arial', sans-serif; /* Cambia la fuente según tus necesidades */
+        }
+      `}</style>
+
+        
+
+                <nav className="navbar navbar-expand-lg">
+                    <div className="container-fluid">
+                        <Link href="/">
+                            <img
+                                src="https://cdn-icons-png.flaticon.com/512/2383/2383684.png"
+                                alt="Logo"
+                                className="navbar-brand"
+                                style={{ width: "70px", height: "70px" }} 
+                            />
+                        </Link>
+                        <span className="navbar-text me-3 text-white fw-bold">Monitoreo Climático</span>
+                        <div className="navbar-nav ms-auto">
+                            <div className="d-flex justify-content-center align-items-center">
+                                <button
+                                    className="btn btn-outline-danger btn-sm"
+                                    style={{
+                                        background: "transparent",
+                                        color: "white",
+                                        borderColor: "transparent",
+                                        transition: "background-color 0.3s, color 0.3s",
+                                    }}
+                                    onMouseOver={(e) => {
+                                        e.target.style.backgroundColor = "#004080";
+                                        e.target.style.color = "lightgray";
+                                    }}
+                                    onMouseOut={(e) => {
+                                        e.target.style.backgroundColor = "transparent";
+                                        e.target.style.color = "white";
+                                    }}
+                                >
+                                    Cerrar Sesión
+                                </button>
+                            </div>
+                            
+                            <Link href="/">
+                                <img
+                                    src="https://cdn.icon-icons.com/icons2/1369/PNG/512/-account-circle_89831.png"
+                                    alt="Icono Cuenta"
+                                    className="nav-link"
+                                    style={{ width: "70px", height: "70px" }} 
+                                />
+                            </Link>
+                            
+                        </div>
                     </div>
+                    <Link href="/informes" passHref>
+                    <button
+                        className="btn btn-success"
+                        style={{
+                            backgroundColor: "#D6DBDF", 
+                            color: "#004080", 
+                            borderColor: "#D6DBDF", 
+                        }}
+                    >
+                        Volver
+                    </button>
+                </Link>
+                </nav>
+                <div className="col text-center">
+                    <div className="bg-primary p-3" style={{ backgroundColor: "#D5D8DC" }}>
+                        <h1 className="text-white">Reporte del Dia</h1>
+                    </div>
+
                     <div className="mt-3">
                         {/* Filtro por tipo de dato */}
                         <select value={tipoDatoFiltro} onChange={handleTipoDatoChange} className="form-control mb-3">
