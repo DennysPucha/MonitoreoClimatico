@@ -1,7 +1,8 @@
 'use strict';
-
+const cron = require("node-cron");
+const axios = require("axios");
 const models = require('../models');
-const {sensor, rol, cuenta, sequelize,persona } = models;
+const {sensor, rol, cuenta, sequelize,persona,reporte } = models;
 const uuid = require('uuid');
 
 class SensorControl {
@@ -233,6 +234,95 @@ class SensorControl {
         }
     }
 
+    async consultarYGuardarDatos() {
+        try {
+          const lista = await sensor.findAll({
+            attributes: ["nombre", "ip", "estado", "external_id","id"],
+            where: { estado: true },
+          });
+    
+          if (!lista || lista.length === 0) {
+            console.error("No hay sensores disponibles para la lectura de datos");
+            return;
+          }
+    
+          const promesas = lista.map(async (element) => {
+            try {
+              const response = await axios.get(`http://${element.ip}`);
+              if (!response.data) {
+                console.error(
+                  `No se recibieron datos del sensor en la IP: ${element.ip}`
+                );
+                return; 
+              }
+    
+              const datosSensor = response.data;
+              console.log(response.data);
+              const tipoDatoMapping = {
+                temperatura: "TEMPERATURA",
+                humedad: "HUMEDAD",
+                presion: "PRESION_ATMOSFERICA",
+              };
+
+              const tipo_dato = Object.keys(datosSensor).find((campo) =>
+                tipoDatoMapping.hasOwnProperty(campo)
+              );
+              console.log(Object.keys(datosSensor).length);
+
+              for (const tipoDato in datosSensor) {
+                if (datosSensor.hasOwnProperty(tipoDato)) {
+                  const data = {
+                    dato: datosSensor[tipoDato],
+                    tipo_dato: tipoDatoMapping.hasOwnProperty(tipoDato)
+                      ? tipoDatoMapping[tipoDato]
+                      : "HUMEDAD",
+                    external_id: uuid.v4(),
+                    id_sensor: element.id,
+                  };
+    
+                  const transaction = await sequelize.transaction();
+    
+                  try {
+                    const result = await reporte.create(data);
+    
+                    await transaction.commit();
+    
+                    if (!result) {
+                      console.error(
+                        "No se pudo crear el informe en la base de datos"
+                      );
+                    }
+    
+                    console.log("Datos consultados y guardados:", data);
+                  } catch (error) {
+                    await transaction.rollback();
+                    console.error(
+                      "Error al guardar datos en la base de datos:",
+                      error.message
+                    );
+                  }
+                }
+              }
+            } catch (error) {
+              console.error(
+                `Error al obtener datos del sensor en la IP: ${element.ip}`,
+                error.message
+              );
+            }
+          });
+    
+          await Promise.all(promesas);
+        } catch (error) {
+          console.error("Error al consultar y guardar datos:", error.message);
+        }
+      }
+    
+      iniciarTareaPeriodica() {
+        cron.schedule("*/5 * * * *", async () => {
+          console.log("Ejecutando tarea periódica...");
+          await this.consultarYGuardarDatos();
+        });
+      }
 }
 
 module.exports = SensorControl;
