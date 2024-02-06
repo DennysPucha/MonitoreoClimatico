@@ -105,6 +105,26 @@ export default function Page() {
           font-family: 'Arial', sans-serif; /* Cambia la fuente según tus necesidades */
         }
       `}</style>
+      <style jsx>{`
+      .table {
+          background: rgba(255, 255, 255, 0.5); /* Fondo transparente */
+        }
+
+        .table thead th {
+          background: rgba(0, 0, 0, 0.8); /* Fondo transparente más oscuro para los titulares */
+          color: white;
+        }
+
+        .table tbody tr {
+          background: rgba(255, 255, 255, 0.3); /* Fondo transparente más claro para las filas de la tabla */
+          color: black; /* Cambia el color del texto si es necesario */
+        }
+
+        .table-bordered th,
+        .table-bordered td {
+          border: 1px solid rgba(0, 0, 0, 0.1); /* Bordes transparentes */
+        }
+      `}</style>
 
       <div className="d-flex flex-column align-items-center">
         { }
@@ -112,7 +132,7 @@ export default function Page() {
 
         <div className="mb-3">
           <label htmlFor="filtroFecha" className="mr-2">
-            Selecciona una fecha:
+            Selecciona una fecha :   
           </label>
           <DatePicker
             selected={selectedDate}
@@ -133,10 +153,10 @@ export default function Page() {
             border: "none",
           }}
         >
-          Buscar en la fecha
+          Buscar 
         </button>
         <div className="overflow-auto border p-3 bg-black bg-opacity-10 text-white rounded">
-          <table className="table table-striped">
+          <table className="table table-striped table-bordered">
             <thead>
               <tr>
                 <th>Fecha</th>

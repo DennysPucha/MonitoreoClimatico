@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { enviar, obtenerTodo } from "@/hooks/Conexion";
+import { enviar, obtenerTodo, simple_enviar } from "@/hooks/Conexion";
 import { getToken, getExternalUser } from "@/hooks/SessionUtil";
 import mensajes from "@/componentes/mensajes";
 import Menu from "@/componentes/menu";
@@ -51,9 +51,10 @@ export default function Page() {
     }).then(async (confirm) => {
       if (confirm) {
         try {
-          const response = await enviar(`/cambiar/estado/sensor/${externalId}`);
+          const token=getToken();
+          const response = await simple_enviar(`cambiar/estado/sensor/${externalId}`,token);
           console.log(response);
-
+          console.log(token);
           if (response.code === 200) {
             mensajes(successMessage, "success", "Realizado con éxito");
             setsensores((prevSensores) =>

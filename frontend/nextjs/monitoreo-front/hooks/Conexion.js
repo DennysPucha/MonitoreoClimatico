@@ -26,6 +26,19 @@ export async function obtenerTodo(recurso, token) {
   return await response.json();
 }
 
+export async function simple_enviar(recurso, token) {
+  const headers = {
+    "Accept": "application/json",
+    "token-monitoreo": token,
+  };
+  const response = await fetch(URL + recurso, {
+    method: "POST",
+    headers: headers, 
+  });
+
+  return await response.json();
+}
+
 
 export async function enviar(recurso, data, token) {
   const headers = {

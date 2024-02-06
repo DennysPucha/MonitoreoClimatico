@@ -1,31 +1,29 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { obtenerTodo } from "@/hooks/Conexion";
 import { getToken, getExternalUser } from "@/hooks/SessionUtil";
 
 export default function Page({ params }) {
-  const { external } = params;
-  const [reportes, setReportes] = useState([]);
-  const [horaInicio, setHoraInicio] = useState("00:00");
-  const [horaFin, setHoraFin] = useState("23:59");
+    const { external } = params;
+    const [reportes, setreportes] = useState([]);
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+    useEffect(() => {
+        const fetchData = async () => {
+            const token = getToken();
+            const externalUser = getExternalUser();
 
-  const fetchData = async () => {
-    const token = getToken();
-    const externalUser = getExternalUser();
+            try {
+                const response = await obtenerTodo(`obtener/sensorReportes/${external}`, token);
+                setreportes(response.data.reporte);
+                console.log(response);
+            } catch (error) {
+                console.error(error);
+            }
+        };
 
-    try {
-      const response = await obtenerTodo(`obtener/sensorReportes/${external}`, token);
-      setReportes(response.data.reporte);
-      console.log(response);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+        fetchData();
+    }, []);
 
     return (
         <div className="container">
@@ -73,13 +71,8 @@ export default function Page({ params }) {
                         </div>
                     </div>
                 </div>
-              ) : (
-                <p>No se encontraron reportes</p>
-              )}
             </div>
-          </div>
         </div>
-      </div>
-    </div>
-  );
+
+    );
 }
