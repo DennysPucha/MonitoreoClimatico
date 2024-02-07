@@ -82,5 +82,7 @@ router.get('/buscar/reportes/:external', reporteControler.buscar);
 router.get('/buscarporFecha/reportes/', reporteControler.buscarporFecha);
 router.get('/buscarporFechaYTipoDato/reportes/', reporteControler.buscarporFechaYTipoDato);
 router.get('/resumenFecha/reportes/', reporteControler.resumenPorFecha);
+router.get('/resumenHorasMañanaTardeNoche/reportes/', reporteControler.resumenPorHoras);
+router.get('/promediosHorasMañanaTardeNoche/reportes/', reporteControler.promediosHoras);
 
 module.exports = router;

@@ -299,8 +299,180 @@ class ReporteControl {
             res.json({ message: "Error interno del servidor", code: 500, error: error.message });
         }
     }
+
+    async resumenPorHoras(req, res) {
+        const fechaEspecifica = req.query.fecha;
+        
+        try {
+            
+            const reportesMañana = await reporte.findAll({
+                where: {
+                    fecha: fechaEspecifica,
+                    hora: {
+                        [Op.between]: [6, 12] 
+                    },
+                },
+            });
+    
+            const reportesTarde = await reporte.findAll({
+                where: {
+                    fecha: fechaEspecifica,
+                    hora: {
+                        [Op.between]: [12, 18] 
+                    },
+                },
+            });
+    
+            const reportesNoche = await reporte.findAll({
+                where: {
+                    fecha: fechaEspecifica,
+                    [Op.or]: [
+                        { hora: { [Op.between]: [18, 23] } },
+                        { hora: { [Op.between]: [0, 5] } } 
+                    ]
+                },
+            });
     
 
+            const obtenerDatoMasRecurrente = (reportes) => {
+                if (!reportes || reportes.length === 0) {
+                    return 'No hay datos';
+                }
+    
+                const datosRecurrentes = reportes.reduce((contador, reporte) => {
+                    contador[reporte.dato] = (contador[reporte.dato] || 0) + 1;
+                    return contador;
+                }, {});
+    
+                const datoMasRecurrente = Object.keys(datosRecurrentes).reduce((dato, key) => (
+                    datosRecurrentes[key] > datosRecurrentes[dato] ? key : dato
+                ), Object.keys(datosRecurrentes)[0]);
+    
+                return datoMasRecurrente !== null ? datoMasRecurrente : 'No hay datos';
+            };
+    
+            // Obtener el dato más recurrente para cada período del día
+            const datoMasRecurrenteMañana = obtenerDatoMasRecurrente(reportesMañana);
+            const datoMasRecurrenteTarde = obtenerDatoMasRecurrente(reportesTarde);
+            const datoMasRecurrenteNoche = obtenerDatoMasRecurrente(reportesNoche);
+    
+            
+            res.status(200);
+            res.json({
+                message: "Éxito",
+                code: 200,
+                data: {
+                    fecha: fechaEspecifica,
+                    resumenMañana: {
+                        datoMasRecurrenteTemperatura: datoMasRecurrenteMañana,
+                        datoMasRecurrenteHumedad: datoMasRecurrenteMañana,
+                        datoMasRecurrentePresionAtmosferica: datoMasRecurrenteMañana,
+                    },
+                    resumenTarde: {
+                        datoMasRecurrenteTemperatura: datoMasRecurrenteTarde,
+                        datoMasRecurrenteHumedad: datoMasRecurrenteTarde,
+                        datoMasRecurrentePresionAtmosferica: datoMasRecurrenteTarde,
+                    },
+                    resumenNoche: {
+                        datoMasRecurrenteTemperatura: datoMasRecurrenteNoche,
+                        datoMasRecurrenteHumedad: datoMasRecurrenteNoche,
+                        datoMasRecurrentePresionAtmosferica: datoMasRecurrenteNoche,
+                    },
+                },
+            });
+        } catch (error) {
+            res.status(500);
+            res.json({ message: "Error interno del servidor", code: 500, error: error.message });
+        }
+    }
+    
+    
+    async promediosHoras(req, res) {
+        const fechaEspecifica = req.query.fecha;
+        
+        try {
+            
+            const reportesMañana = await reporte.findAll({
+                where: {
+                    fecha: fechaEspecifica,
+                    hora: {
+                        [Op.between]: [6, 12] 
+                    },
+                },
+            });
+    
+            const reportesTarde = await reporte.findAll({
+                where: {
+                    fecha: fechaEspecifica,
+                    hora: {
+                        [Op.between]: [12, 18] 
+                    },
+                },
+            });
+    
+            const reportesNoche = await reporte.findAll({
+                where: {
+                    fecha: fechaEspecifica,
+                    [Op.or]: [
+                        { hora: { [Op.between]: [18, 23] } }, 
+                        { hora: { [Op.between]: [0, 5] } } 
+                    ]
+                },
+            });
+    
+          
+            const calcularPromedio = (reportes) => {
+                if (!reportes || reportes.length === 0) {
+                    return 0;
+                }
+    
+                const total = reportes.reduce((acumulador, reporte) => acumulador + reporte.dato, 0);
+                return total / reportes.length;
+            };
+    
+     
+            const promedioTemperaturaMañana = calcularPromedio(reportesMañana);
+            const promedioHumedadMañana = calcularPromedio(reportesMañana);
+            const promedioPresionAtmosfericaMañana = calcularPromedio(reportesMañana);
+    
+            const promedioTemperaturaTarde = calcularPromedio(reportesTarde);
+            const promedioHumedadTarde = calcularPromedio(reportesTarde);
+            const promedioPresionAtmosfericaTarde = calcularPromedio(reportesTarde);
+    
+            const promedioTemperaturaNoche = calcularPromedio(reportesNoche);
+            const promedioHumedadNoche = calcularPromedio(reportesNoche);
+            const promedioPresionAtmosfericaNoche = calcularPromedio(reportesNoche);
+    
+            
+            res.status(200);
+            res.json({
+                message: "Éxito",
+                code: 200,
+                data: {
+                    fecha: fechaEspecifica,
+                    resumenMañana: {
+                        promedioTemperatura: promedioTemperaturaMañana,
+                        promedioHumedad: promedioHumedadMañana,
+                        promedioPresionAtmosferica: promedioPresionAtmosfericaMañana,
+                    },
+                    resumenTarde: {
+                        promedioTemperatura: promedioTemperaturaTarde,
+                        promedioHumedad: promedioHumedadTarde,
+                        promedioPresionAtmosferica: promedioPresionAtmosfericaTarde,
+                    },
+                    resumenNoche: {
+                        promedioTemperatura: promedioTemperaturaNoche,
+                        promedioHumedad: promedioHumedadNoche,
+                        promedioPresionAtmosferica: promedioPresionAtmosfericaNoche,
+                    },
+                },
+            });
+        } catch (error) {
+            res.status(500);
+            res.json({ message: "Error interno del servidor", code: 500, error: error.message });
+        }
+    }
+    
 
 }
 module.exports = ReporteControl;
