@@ -9,7 +9,7 @@ export async function obtenerReportesPorFecha(fecha) {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`, // Asegúrate de incluir el token de autorización si es necesario
+        'Authorization': `Bearer ${token}`, 
       },
     });
 

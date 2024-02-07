@@ -47,7 +47,7 @@ export default function Page({ params }) {
                         <h1 className="text-white">Reportes del sensor</h1>
                     </div>
                     <div className="mt-3">
-                        {/* Filtro por tipo de dato */}
+                  
                         <select value={tipoDatoFiltro} onChange={handleTipoDatoChange} className="form-control mb-3">
                             <option value="TEMPERATURA">Temperatura</option>
                             <option value="HUMEDAD">Humedad</option>
