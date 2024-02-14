@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { obtenerTodo } from "@/hooks/Conexion";
 import { getToken, getExternalUser } from "@/hooks/SessionUtil";
+import Menu from "@/componentes/menu";
 
 export default function Page({ params }) {
     const { external } = params;
@@ -27,13 +28,12 @@ export default function Page({ params }) {
 
     return (
         <div className="container">
+            <Menu></Menu>
             <div className="row mt-3">
-            <Link href="/sensores" passHref>
-                <button className="btn btn-success">Volver</button>
-            </Link>
-                <div className="col text-center">
-                    <div className="bg-primary p-3">
-                        <h1 className="text-white">Reportes del sensor</h1>
+
+                <div className="col text-center border p-3  text-white rounded">
+                    <div className="bg-primary p-3 rounded" >
+                        <h1 className="text-white">Últimos Reportes del sensor</h1>
                     </div>
                     <div className="mt-3">
                         <div

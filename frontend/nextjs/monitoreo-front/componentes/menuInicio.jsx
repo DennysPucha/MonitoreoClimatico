@@ -23,27 +23,23 @@ export default function MenuInicio() {
                     <span className="navbar-toggler-icon"></span>
                 </button>
 
-                <div className="collapse navbar-collapse" id="navbarNav">
-                    <ul className="navbar-nav ml-auto">
+                <div className="collapse navbar-collapse justify-content-between" id="navbarNav">
+                    <ul className="navbar-nav">
                         <li className="nav-item">
                             <h>
                                 Monitoreo climático
                             </h>
                         </li>
                     </ul>
-                </div>
 
-                <div className="navbar-nav ml-auto">
-                    <li className="nav-item">
+                    <div className="navbar-nav">
                         <Link href="/informes" passHref>
-                            <button className="btn btn-outline-dark">Ver historial</button>
+                            <div className="nav-link">Ver historial</div>
                         </Link>
-                    </li>
-                    <li className="nav-item" style={{marginLeft:"5px"}}>
                         <Link href="/inicioSesion" passHref>
-                            <button className="btn btn-light">Iniciar sesión</button>
+                            <div className="nav-link">Iniciar sesión</div>
                         </Link>
-                    </li>
+                    </div>
                 </div>
 
                 <Link href="/ruta/de/tu/imagen-fin.png" passHref>
