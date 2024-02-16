@@ -73,7 +73,6 @@ router.get('/listar/sensores', middlewareAutentificacion, sensorController.lista
 router.post('/modificar/sensor/:external', middlewareAutentificacion, sensorController.modificar);
 router.post('/guardar/sensor', middlewareAutentificacion, sensorController.guardar);
 router.post('/cambiar/estado/sensor/:external', middlewareAutentificacion, sensorController.cambiarEstadoSensor);
-
 router.get('/listar/reportes', reporteControler.listar);
 router.post('/modificar/reporte/:external', middlewareAutentificacion, reporteControler.modificar);
 router.post('/guardar/reporte', middlewareAutentificacion, reporteControler.guardar);
@@ -82,7 +81,6 @@ router.get('/buscar/reportes/:external', reporteControler.buscar);
 router.get('/buscarporFecha/reportes/', reporteControler.buscarporFecha);
 router.get('/buscarporFechaYTipoDato/reportes/', reporteControler.buscarporFechaYTipoDato);
 router.get('/resumenFecha/reportes/', reporteControler.resumenPorFecha);
-router.get('/resumenHorasMañanaTardeNoche/reportes/', reporteControler.resumenPorHoras);
-router.get('/promediosHorasMañanaTardeNoche/reportes/', reporteControler.promediosHoras);
 
+router.get('/buscarporFecha/determinarClima',reporteControler.determinarClima);
 module.exports = router;
