@@ -8,12 +8,14 @@ const RolController = require('../app/controls/RolControl');
 const CuentaController = require('../app/controls/CuentaControl');
 const SensorController = require('../app/controls/SensorControl');
 const ReporteController = require('../app/controls/ReporteControl');
+const PronosticoControl = require('../app/controls/PronosticoControl');
 
 const personaController = new PersonaController();
 const rolController = new RolController();
 const cuentaController = new CuentaController();
 const sensorController = new SensorController();
 const reporteControler = new ReporteController();
+const pronosticoControl = new PronosticoControl();
 
 router.get('/', function (req, res, next) {
     res.send('respond with a resource');
@@ -75,6 +77,7 @@ router.post('/guardar/sensor', sensorController.guardar);
 router.post('/cambiar/estado/sensor/:external', sensorController.cambiarEstadoSensor);
 
 router.get('/listar/reportes', reporteControler.listar);
+router.get('/listar/reportes/ultimos', reporteControler.listarUltimos);
 router.post('/modificar/reporte/:external', middlewareAutentificacion, reporteControler.modificar);
 router.post('/guardar/reporte', middlewareAutentificacion, reporteControler.guardar);
 router.get('/obtener/reporte/:external', reporteControler.obtener);
@@ -83,7 +86,7 @@ router.get('/buscarporFecha/reportes/', reporteControler.buscarporFecha);
 router.get('/buscarporFechaYTipoDato/reportes/', reporteControler.buscarporFechaYTipoDato);
 router.get('/resumenFecha/reportes/', reporteControler.resumenPorFecha);
 //router.post('/borrar/reportes', reporteControler.borrarTodosLosDatos);
-
+router.get('/ultimoReporte/reportes/', pronosticoControl.obtenerUltimoRegistro);
 sensorController.iniciarTareaPeriodica();
 
 module.exports = router;

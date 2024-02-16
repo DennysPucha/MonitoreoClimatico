@@ -63,9 +63,34 @@ class ReporteControl {
       });
     }
   }
+  async listarUltimos(req, res) {
+    try {
+      const lista = await reporte.findAll({
+        attributes: [
+          "fecha",
+          "hora_registro",
+          "dato",
+          "tipo_dato",
+          "external_id",
+        ],
+        order: [["id", "DESC"]],
+        limit: 20,
+      });
+
+      res.status(200);
+      res.json({ message: "Éxito", code: 200, data: lista });
+    } catch (error) {
+      res.status(500);
+      res.json({
+        message: "Error interno del servidor",
+        code: 500,
+        error: error.message,
+      });
+    }
+  }
 
   async guardar(req, res) {
-    const { fecha, dato, tipo_dato, sensor: id_sensor } = req.body;
+    const { fecha, dato, tipo_dato, sensor: id_sesnsor } = req.body;
 
     if (fecha && dato && id_sensor) {
       try {

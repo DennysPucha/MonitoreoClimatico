@@ -51,8 +51,8 @@ export default function Page() {
     }).then(async (confirm) => {
       if (confirm) {
         try {
-          const token=getToken();
-          const response = await simple_enviar(`cambiar/estado/sensor/${externalId}`,token);
+          const token = getToken();
+          const response = await simple_enviar(`cambiar/estado/sensor/${externalId}`, token);
           console.log(response);
           console.log(token);
           if (response.code === 200) {
@@ -75,7 +75,7 @@ export default function Page() {
   };
 
   return (
-    <div className="container">
+    <div style={styles.container}>
       <header>
         <Menu></Menu>
       </header>
@@ -164,4 +164,15 @@ export default function Page() {
       </div>
     </div>
   );
+
+
 }
+
+const styles = {
+  container: {
+    textAlign: 'center',
+    padding: '40px',
+    minHeight: '100vh',
+    backgroundColor: 'rgba(255, 255, 255, 0.00)'
+  },
+};

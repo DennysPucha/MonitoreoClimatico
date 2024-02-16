@@ -67,31 +67,14 @@ export default function Page() {
                     e.target.style.color = "white";
                   }}
                 >
-                  Cerrar Sesión
+                  Volver
                 </button>
               </div>
-              <Link href="/">
-                <img
-                  src="https://cdn.icon-icons.com/icons2/1369/PNG/512/-account-circle_89831.png"
-                  alt="Icono Cuenta"
-                  className="nav-link"
-                  style={{ width: "70px", height: "70px" }}
-                />
+              <Link href="/principal">
               </Link>
             </div>
           </div>
-          <Link href="/principal" passHref>
-            <button
-              className="btn btn-success"
-              style={{
-                backgroundColor: "#D6DBDF",
-                color: "#004080",
-                borderColor: "#D6DBDF",
-              }}
-            >
-              Volver
-            </button>
-          </Link>
+
         </nav>
       </header>
       <style jsx global>{`
