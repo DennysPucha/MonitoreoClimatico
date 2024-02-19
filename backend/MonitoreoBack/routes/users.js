@@ -82,6 +82,8 @@ router.get('/buscar/reportes/:external', reporteControler.buscar);
 router.get('/buscarporFecha/reportes/', reporteControler.buscarporFecha);
 router.get('/buscarporFechaYTipoDato/reportes/', reporteControler.buscarporFechaYTipoDato);
 router.get('/resumenFecha/reportes/', reporteControler.resumenPorFecha);
+
+router.get('/buscarporFecha/determinarClima',reporteControler.determinarClima);
 //router.post('/borrar/reportes', reporteControler.borrarTodosLosDatos);
 
 sensorController.iniciarTareaPeriodica();

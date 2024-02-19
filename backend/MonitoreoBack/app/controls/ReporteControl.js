@@ -294,16 +294,100 @@ class ReporteControl {
       });
     }
   }
+
+
+  async  determinarClima(req, res) {
+    const fechaEspecifica = req.query.fecha;
+    function calcularPromedio(arr) {
+      if (arr.length === 0) return 0;
+      const suma = arr.reduce((total, valor) => total + valor, 0);
+      return suma / arr.length;
+  } 
+    try {
+        const datos = await reporte.findAll({
+            where: { fecha: fechaEspecifica },
+            attributes: ["dato", "tipo_dato"],
+        });
+
+        let temperaturas = [];
+        let humedades = [];
+        let presiones = [];
+
+        datos.forEach(dato => {
+            if (dato.tipo_dato === "TEMPERATURA") {
+                temperaturas.push(dato.dato);
+            } else if (dato.tipo_dato === "HUMEDAD") {
+                humedades.push(dato.dato);
+            } else if (dato.tipo_dato === "PRESION_ATMOSFERICA") {
+                presiones.push(dato.dato);
+            }
+        });
+        
+        const temperaturaPromedio = calcularPromedio(temperaturas);
+        const humedadPromedio = calcularPromedio(humedades);
+        const presionPromedio = calcularPromedio(presiones);
+
+        let clima = "Desconocido";
+        let descripcion = "";
+
+        // Continuación de la lógica para determinar el clima basado en los promedios
+        if (temperaturaPromedio > 25 && humedadPromedio > 70) {
+            clima = "Caluroso y húmedo";
+            descripcion = "El clima es caluroso y húmedo, prepárate para altas temperaturas y humedad.";
+        } else if (temperaturaPromedio < 10 && presionPromedio < 1000) {
+            clima = "Frío y baja presión";
+            descripcion = "El clima es frío con baja presión atmosférica, se espera un día fresco y posiblemente lluvioso.";
+        } else if (temperaturaPromedio > 25 && humedadPromedio <= 70) {
+            clima = "Caluroso";
+            descripcion = "El clima es caluroso, prepárate para altas temperaturas.";
+        } else if (temperaturaPromedio < 10 && presionPromedio >= 1000) {
+            clima = "Frío y alta presión";
+            descripcion = "El clima es frío con alta presión atmosférica, se espera un día fresco y claro.";
+        } else if (temperaturaPromedio > 10 && temperaturaPromedio <= 25 && humedadPromedio > 70) {
+            clima = "Húmedo";
+            descripcion = "El clima es húmedo, se espera una sensación de humedad en el ambiente.";
+        } else if (temperaturaPromedio > 10 && temperaturaPromedio <= 25 && presionPromedio < 1000) {
+            clima = "Normal con baja presión";
+            descripcion = "El clima es normal con baja presión atmosférica, se recomienda estar atento a posibles cambios en el clima.";
+        } else {
+            clima = "Normal";
+            descripcion = "El clima es normal para esta fecha, sin condiciones climáticas extremas.";
+        }
+        
+        // Se verifica si hay probabilidad de lluvia
+        if (humedadPromedio > 80 && presionPromedio < 1000) {
+            descripcion += " Además, se esperan lluvias.";
+        }
+
+        res.status(200);
+        res.json({ message: "Éxito", code: 200, data: { clima, descripcion } });
+    } catch (error) {
+        res.status(500);
+        res.json({
+            message: "Error interno del servidor",
+            code: 500,
+            error: error.message,
+        });
+    }
+}
+
+
+
   async buscarporFechaYTipoDato(req, res) {
     const fechaEspecifica = req.query.fecha;
     const tipoDatoEspecifico = req.query.tipo_dato;
 
     try {
+      let whereClause = {
+        fecha: fechaEspecifica,
+      };
+
+      if (tipoDatoEspecifico !== "NINGUNO") {
+        whereClause.tipo_dato = tipoDatoEspecifico;
+      }
+
       const reportesFiltrados = await reporte.findAll({
-        where: {
-          fecha: fechaEspecifica,
-          tipo_dato: tipoDatoEspecifico,
-        },
+        where: whereClause,
         attributes: [
           "fecha",
           "dato",
@@ -408,19 +492,5 @@ class ReporteControl {
       });
     }
   }
-  /*
-  async borrarTodosLosDatos() {
-    try {
-      const cantidadBorrada = await reporte.destroy({
-        where: {}, // Sin condiciones, borra todos los registros
-        truncate: true, // Reinicia la secuencia del ID
-      });
-  
-      console.log(`${cantidadBorrada} registros de 'reporte' fueron borrados.`);
-    } catch (error) {
-      console.error("Error al borrar los datos:", error.message);
-    }
-  }
-  */
 }
 module.exports = ReporteControl;
