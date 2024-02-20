@@ -1,26 +1,34 @@
 "use client";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { enviar, obtenerTodo, simple_enviar } from "@/hooks/Conexion";
 import { getToken, getExternalUser } from "@/hooks/SessionUtil";
 import mensajes from "@/componentes/mensajes";
 import Menu from "@/componentes/menu";
 import swal from "sweetalert";
+import { Router } from "next/router";
 
 export default function Page() {
   const [sensores, setsensores] = useState([]);
-
+  const router = useRouter();
   useEffect(() => {
     const fetchData = async () => {
       const token = getToken();
       const externalUser = getExternalUser();
 
-      try {
-        const response = await obtenerTodo("listar/sensores", token);
-        setsensores(response.data);
-        console.log(response);
-      } catch (error) {
-        console.error(error);
+      if (!token) {
+        // console.error("No se pudo obtener el external del usuario desde el sessionStorage");
+        router.push("/inicioSesion");
+        return;
+      } else {
+        try {
+          const response = await obtenerTodo("listar/sensores", token);
+          setsensores(response.data);
+          console.log(response);
+        } catch (error) {
+          console.error(error);
+        }
       }
     };
 
@@ -75,11 +83,11 @@ export default function Page() {
   };
 
   return (
-    <div style={styles.container}>
+    <div className="container">
       <header>
         <Menu></Menu>
       </header>
-      {/* ... (Código del navbar y otros elementos) ... */}
+
       <div className="container mt-5 d-flex flex-column justify-content-center align-items-center">
         <div className="row mt-3">
           <div className="col text-center">
@@ -164,15 +172,4 @@ export default function Page() {
       </div>
     </div>
   );
-
-
 }
-
-const styles = {
-  container: {
-    textAlign: 'center',
-    padding: '40px',
-    minHeight: '100vh',
-    backgroundColor: 'rgba(255, 255, 255, 0.00)'
-  },
-};

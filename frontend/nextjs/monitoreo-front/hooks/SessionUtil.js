@@ -16,7 +16,12 @@ export const getToken = () => {
 };
 
 export const borrarSesion = () => {
-  sessionStorage.clear();
+  if (typeof sessionStorage !== 'undefined') {
+    sessionStorage.clear();
+  } else {
+    console.error("El sessionStorage no está disponible en este entorno.");
+    // Puedes manejar este caso de otra manera según tus necesidades
+  }
 };
 
 export const saveExternalUser = (externalUser) => {

@@ -33,14 +33,21 @@ const ListadoPronostico = ({ tipoDato, fecha }) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {pronosticos.map((pronostico, index) => (
-                            <tr key={index}>
-                                <th scope="row">{index + 1}</th>
-                                <td>{pronostico.fecha}</td>
-                                <td>{pronostico.hora}</td>
-                                <td>{pronostico.dato}</td>
+                        {pronosticos && pronosticos.length > 0 ? (
+                            pronosticos.map((pronostico, index) => (
+                                <tr key={index}>
+                                    <th scope="row">{index + 1}</th>
+                                    <td>{pronostico.fecha}</td>
+                                    <td>{pronostico.hora}</td>
+                                    <td>{pronostico.dato}</td>
+                                </tr>
+                            ))
+                        ) : (
+                            <tr>
+                                <td colSpan="4">No se encontraron pronósticos</td>
                             </tr>
-                        ))}
+                        )}
+
                     </tbody>
                 </table>
             </div>

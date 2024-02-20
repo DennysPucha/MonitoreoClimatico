@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import TarjetasPronosticos from "@/componentes/tarjetasPronostico";
 import ListadoPronostico from "@/componentes/listaPronosticoHoras";
 
@@ -30,19 +30,14 @@ export default function Page() {
     const fechas = getProximasFechas();
     console.log(fechas);
 
-    // Manejar cambios en selectedTipoDato
-    const handleTipoDatoChange = (e) => {
-        setSelectedTipoDato(e.target.value);
-        // Mostrar el ListadoPronostico
-        setMostrarListado(true);
-    };
-
-    // Manejar cambios en selectedFecha
-    const handleFechaChange = (e) => {
-        setSelectedFecha(e.target.value);
-        // Mostrar el ListadoPronostico
-        setMostrarListado(true);
-    };
+    useEffect(() => {
+        // Verificar que se haya seleccionado un tipo de dato y una fecha
+        if (selectedTipoDato && selectedFecha) {
+            setMostrarListado(true);
+        } else {
+            setMostrarListado(false);
+        }
+    }, [selectedTipoDato, selectedFecha]);
 
     return (
         <div className="container mt-4">
@@ -55,7 +50,7 @@ export default function Page() {
                         className="form-select"
                         id="tipoDato"
                         value={selectedTipoDato}
-                        onChange={handleTipoDatoChange}
+                        onChange={(e) => setSelectedTipoDato(e.target.value)}
                     >
                         <option value="">Seleccione un tipo de dato</option>
                         {tiposDatos.map((tipo) => (
@@ -69,7 +64,7 @@ export default function Page() {
                         className="form-select"
                         id="fecha"
                         value={selectedFecha}
-                        onChange={handleFechaChange}
+                        onChange={(e) => setSelectedFecha(e.target.value)}
                     >
                         <option value="">Seleccione una fecha</option>
                         {fechas.map((fecha) => (
@@ -78,15 +73,10 @@ export default function Page() {
                     </select>
                 </div>
             </div>
-            {/* No es necesario el botón
-            <div className="mt-4">
-                <button className="btn btn-primary" onClick={handleButtonClick}>
-                    Ver Pronóstico
-                </button>
-            </div>
-            */}
             {/* Mostrar ListadoPronostico si el estado es true */}
-            {mostrarListado && <ListadoPronostico tipoDato={selectedTipoDato} fecha={selectedFecha} />}
+
+            <ListadoPronostico tipoDato={selectedTipoDato} fecha={selectedFecha} />
+
         </div>
     );
 }
