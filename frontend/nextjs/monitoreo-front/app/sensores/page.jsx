@@ -79,7 +79,7 @@ export default function Page() {
       <header>
         <Menu></Menu>
       </header>
-      {/* ... (Código del navbar y otros elementos) ... */}
+
       <div className="container mt-5 d-flex flex-column justify-content-center align-items-center">
         <div className="row mt-3">
           <div className="col text-center">

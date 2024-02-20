@@ -36,6 +36,9 @@ export default function MenuInicio() {
                         <Link href="/informes" passHref>
                             <div className="nav-link">Ver historial</div>
                         </Link>
+                        <Link href="/pronostico" passHref>
+                            <div className="nav-link">Pronostico</div>
+                        </Link>
                         <Link href="/inicioSesion" passHref>
                             <div className="nav-link">Iniciar sesión</div>
                         </Link>

@@ -6,7 +6,7 @@ import mensajes from "@/componentes/mensajes";
 import { useRouter } from "next/navigation";
 import { inicioSesion } from "@/hooks/inicio_sesion";
 import { borrarSesion, getRol } from "@/hooks/SessionUtil";
-
+import MenuInicio from "@/componentes/menuInicio";
 export default function InicioSesion() {
     borrarSesion();
     const router = useRouter();
@@ -35,6 +35,7 @@ export default function InicioSesion() {
 
     return (
         <div className="container" >
+            <MenuInicio></MenuInicio>
             <div className="col-lg-6 mx-auto mt-5">
                 <div className="card" style={{ width: '500px', padding: '15px', borderRadius: '10px', backgroundColor: 'rgba(51, 185, 251, 0.1)', textAlign: 'center' }}>
                     <h1 style={{ fontSize: '2rem', fontWeight: 'bold', marginBottom: '20px' }}>
@@ -77,7 +78,7 @@ export default function InicioSesion() {
                                 type="submit"
                                 className="btn btn-primary btn-block mb-4"
                             >
-                                Iniciar Sesión {/* Cambiado a español */}
+                                Iniciar Sesión
                             </button>
                         </form>
                     </div>
