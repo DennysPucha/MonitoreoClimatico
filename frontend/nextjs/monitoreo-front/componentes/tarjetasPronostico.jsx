@@ -70,7 +70,7 @@ export default function TarjetasPronosticos() {
                 <div key={tipoPronostico}>
                     <h6>{tipoPronostico}:</h6>
                     {pronosticosMomento.map((pronostico, index) => (
-                        <div key={index}>
+                        <div key={index} className="text-center">
                             {pronostico.tipo_pronostico === 'TEMPERATURA' && <WiThermometer />}
                             {pronostico.tipo_pronostico === 'HUMEDAD' && <WiHumidity />}
                             {pronostico.tipo_pronostico === 'PRESION_ATMOSFERICA' && <WiBarometer />}:
@@ -106,9 +106,9 @@ export default function TarjetasPronosticos() {
                             <Container>
                                 <h4>{fecha === currentDate ? 'Hoy' : fecha}</h4>
                                 <Row className="g-2">
-                                    <Col>{renderMomento(pronosticosAgrupados[fecha]['Mañana'].temperatura, 'Mañana')}</Col>
-                                    <Col>{renderMomento(pronosticosAgrupados[fecha]['Tarde'].temperatura, 'Tarde')}</Col>
-                                    <Col>{renderMomento(pronosticosAgrupados[fecha]['Noche'].temperatura, 'Noche')}</Col>
+                                    <Col className="text-center">{renderMomento(pronosticosAgrupados[fecha]['Mañana'].temperatura, 'Mañana')}</Col>
+                                    <Col className="text-center">{renderMomento(pronosticosAgrupados[fecha]['Tarde'].temperatura, 'Tarde')}</Col>
+                                    <Col className="text-center">{renderMomento(pronosticosAgrupados[fecha]['Noche'].temperatura, 'Noche')}</Col>
                                 </Row>
                             </Container>
                         </div>

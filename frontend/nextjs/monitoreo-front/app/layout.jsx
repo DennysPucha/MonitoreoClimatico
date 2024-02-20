@@ -1,5 +1,6 @@
 import { estaSesion } from '@/hooks/SessionUtil';
 import 'bootstrap/dist/css/bootstrap.css';
+import Footer from '@/componentes/footer';
 
 export const metadata = {
   title: 'Monitoreo Climático',
@@ -25,6 +26,7 @@ export default function RootLayout({ children }) {
         <section className="container-fluid flex-grow-1">
           {children}
         </section>
+
       </body>
     </html>
   );

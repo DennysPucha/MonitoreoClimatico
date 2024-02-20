@@ -22,7 +22,7 @@ const ListadoPronostico = ({ tipoDato, fecha }) => {
 
     return (
         <div className="container mt-4">
-            <div className="table-responsive" style={{ maxHeight: "300px", overflowY: "scroll" }}>
+            <div className="table-responsive" style={{ maxHeight: "200px", overflowY: "scroll" }}>
                 <table className="table table-bordered table-striped text-center">
                     <thead className="thead-dark">
                         <tr>

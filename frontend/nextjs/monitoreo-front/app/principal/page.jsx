@@ -60,6 +60,9 @@ const Page = () => {
                 <button style={styles.button} onClick={handleUpdateChart}>Ver detalles</button>
 
             </section>
+            <div>
+                {/* <ChartComponent></ChartComponent> */}
+            </div>
         </div>
     );
 };
