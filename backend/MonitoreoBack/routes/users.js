@@ -67,12 +67,13 @@ router.post('/modificar/persona/:external', personaController.modificar);
 router.post('/guardar/personas', personaController.guardar);
 router.get('/obtener/persona/:external', personaController.obtener);
 
-router.get('/obtener/sensor/:external', middlewareAutentificacion, sensorController.obtener);
-router.get('/obtener/sensorReportes/:external', middlewareAutentificacion, sensorController.obtenerReportes);
-router.get('/listar/sensores', middlewareAutentificacion, sensorController.listar);
-router.post('/modificar/sensor/:external', middlewareAutentificacion, sensorController.modificar);
-router.post('/guardar/sensor', middlewareAutentificacion, sensorController.guardar);
-router.post('/cambiar/estado/sensor/:external', middlewareAutentificacion, sensorController.cambiarEstadoSensor);
+router.get('/obtener/sensor/:external', sensorController.obtener);
+router.get('/obtener/sensorReportes/:external', sensorController.obtenerReportes);
+router.get('/listar/sensores', sensorController.listar);
+router.post('/modificar/sensor/:external', sensorController.modificar);
+router.post('/guardar/sensor', sensorController.guardar);
+router.post('/cambiar/estado/sensor/:external', sensorController.cambiarEstadoSensor);
+
 router.get('/listar/reportes', reporteControler.listar);
 router.post('/modificar/reporte/:external', middlewareAutentificacion, reporteControler.modificar);
 router.post('/guardar/reporte', middlewareAutentificacion, reporteControler.guardar);
@@ -81,6 +82,11 @@ router.get('/buscar/reportes/:external', reporteControler.buscar);
 router.get('/buscarporFecha/reportes/', reporteControler.buscarporFecha);
 router.get('/buscarporFechaYTipoDato/reportes/', reporteControler.buscarporFechaYTipoDato);
 router.get('/resumenFecha/reportes/', reporteControler.resumenPorFecha);
+router.get('/resumenRangoFechas/reportes/', reporteControler.resumenPorRangoDeFechas);
 
 router.get('/buscarporFecha/determinarClima',reporteControler.determinarClima);
+//router.post('/borrar/reportes', reporteControler.borrarTodosLosDatos);
+
+sensorController.iniciarTareaPeriodica();
+
 module.exports = router;

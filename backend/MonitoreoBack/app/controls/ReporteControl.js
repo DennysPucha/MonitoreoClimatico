@@ -1,6 +1,7 @@
 "use strict";
 
 const models = require("../models");
+const { Op } = require('sequelize');
 const { reporte, rol, cuenta, sequelize, persona, sensor } = models;
 const uuid = require("uuid");
 class ReporteControl {
@@ -296,80 +297,80 @@ class ReporteControl {
   }
 
 
-  async  determinarClima(req, res) {
+  async determinarClima(req, res) {
     const fechaEspecifica = req.query.fecha;
     function calcularPromedio(arr) {
       if (arr.length === 0) return 0;
       const suma = arr.reduce((total, valor) => total + valor, 0);
       return suma / arr.length;
-  }
-    try {
-        const datos = await reporte.findAll({
-            where: { fecha: fechaEspecifica },
-            attributes: ["dato", "tipo_dato"],
-        });
-
-        let temperaturas = [];
-        let humedades = [];
-        let presiones = [];
-
-        datos.forEach(dato => {
-            if (dato.tipo_dato === "TEMPERATURA") {
-                temperaturas.push(dato.dato);
-            } else if (dato.tipo_dato === "HUMEDAD") {
-                humedades.push(dato.dato);
-            } else if (dato.tipo_dato === "PRESION_ATMOSFERICA") {
-                presiones.push(dato.dato);
-            }
-        });
-        
-        const temperaturaPromedio = calcularPromedio(temperaturas);
-        const humedadPromedio = calcularPromedio(humedades);
-        const presionPromedio = calcularPromedio(presiones);
-
-        let clima = "Desconocido";
-        let descripcion = "";
-
-        // Continuación de la lógica para determinar el clima basado en los promedios
-        if (temperaturaPromedio > 25 && humedadPromedio > 70) {
-            clima = "Caluroso y húmedo";
-            descripcion = "El clima es caluroso y húmedo, prepárate para altas temperaturas y humedad.";
-        } else if (temperaturaPromedio < 10 && presionPromedio < 1000) {
-            clima = "Frío y baja presión";
-            descripcion = "El clima es frío con baja presión atmosférica, se espera un día fresco y posiblemente lluvioso.";
-        } else if (temperaturaPromedio > 25 && humedadPromedio <= 70) {
-            clima = "Caluroso";
-            descripcion = "El clima es caluroso, prepárate para altas temperaturas.";
-        } else if (temperaturaPromedio < 10 && presionPromedio >= 1000) {
-            clima = "Frío y alta presión";
-            descripcion = "El clima es frío con alta presión atmosférica, se espera un día fresco y claro.";
-        } else if (temperaturaPromedio > 10 && temperaturaPromedio <= 25 && humedadPromedio > 70) {
-            clima = "Húmedo";
-            descripcion = "El clima es húmedo, se espera una sensación de humedad en el ambiente.";
-        } else if (temperaturaPromedio > 10 && temperaturaPromedio <= 25 && presionPromedio < 1000) {
-            clima = "Normal con baja presión";
-            descripcion = "El clima es normal con baja presión atmosférica, se recomienda estar atento a posibles cambios en el clima.";
-        } else {
-            clima = "Normal";
-            descripcion = "El clima es normal para esta fecha, sin condiciones climáticas extremas.";
-        }
-        
-        // Se verifica si hay probabilidad de lluvia
-        if (humedadPromedio > 80 && presionPromedio < 1000) {
-            descripcion += " Además, se esperan lluvias.";
-        }
-
-        res.status(200);
-        res.json({ message: "Éxito", code: 200, data: { clima, descripcion } });
-    } catch (error) {
-        res.status(500);
-        res.json({
-            message: "Error interno del servidor",
-            code: 500,
-            error: error.message,
-        });
     }
-}
+    try {
+      const datos = await reporte.findAll({
+        where: { fecha: fechaEspecifica },
+        attributes: ["dato", "tipo_dato"],
+      });
+
+      let temperaturas = [];
+      let humedades = [];
+      let presiones = [];
+
+      datos.forEach(dato => {
+        if (dato.tipo_dato === "TEMPERATURA") {
+          temperaturas.push(dato.dato);
+        } else if (dato.tipo_dato === "HUMEDAD") {
+          humedades.push(dato.dato);
+        } else if (dato.tipo_dato === "PRESION_ATMOSFERICA") {
+          presiones.push(dato.dato);
+        }
+      });
+
+      const temperaturaPromedio = calcularPromedio(temperaturas);
+      const humedadPromedio = calcularPromedio(humedades);
+      const presionPromedio = calcularPromedio(presiones);
+
+      let clima = "Desconocido";
+      let descripcion = "";
+
+      // Continuación de la lógica para determinar el clima basado en los promedios
+      if (temperaturaPromedio > 25 && humedadPromedio > 70) {
+        clima = "Caluroso y húmedo";
+        descripcion = "El clima es caluroso y húmedo, prepárate para altas temperaturas y humedad.";
+      } else if (temperaturaPromedio < 10 && presionPromedio < 1000) {
+        clima = "Frío y baja presión";
+        descripcion = "El clima es frío con baja presión atmosférica, se espera un día fresco y posiblemente lluvioso.";
+      } else if (temperaturaPromedio > 25 && humedadPromedio <= 70) {
+        clima = "Caluroso";
+        descripcion = "El clima es caluroso, prepárate para altas temperaturas.";
+      } else if (temperaturaPromedio < 10 && presionPromedio >= 1000) {
+        clima = "Frío y alta presión";
+        descripcion = "El clima es frío con alta presión atmosférica, se espera un día fresco y claro.";
+      } else if (temperaturaPromedio > 10 && temperaturaPromedio <= 25 && humedadPromedio > 70) {
+        clima = "Húmedo";
+        descripcion = "El clima es húmedo, se espera una sensación de humedad en el ambiente.";
+      } else if (temperaturaPromedio > 10 && temperaturaPromedio <= 25 && presionPromedio < 1000) {
+        clima = "Normal con baja presión";
+        descripcion = "El clima es normal con baja presión atmosférica, se recomienda estar atento a posibles cambios en el clima.";
+      } else {
+        clima = "Normal";
+        descripcion = "El clima es normal para esta fecha, sin condiciones climáticas extremas.";
+      }
+
+      // Se verifica si hay probabilidad de lluvia
+      if (humedadPromedio > 80 && presionPromedio < 1000) {
+        descripcion += " Además, se esperan lluvias.";
+      }
+
+      res.status(200);
+      res.json({ message: "Éxito", code: 200, data: { clima, descripcion } });
+    } catch (error) {
+      res.status(500);
+      res.json({
+        message: "Error interno del servidor",
+        code: 500,
+        error: error.message,
+      });
+    }
+  }
 
 
 
@@ -417,6 +418,7 @@ class ReporteControl {
       });
     }
   }
+
   async resumenPorFecha(req, res) {
     const fechaEspecifica = req.query.fecha;
 
@@ -445,44 +447,36 @@ class ReporteControl {
         attributes: ["dato"],
       });
 
-      const obtenerDatoMasRecurrente = (reportes) => {
+      const calcularPromedio = (reportes) => {
         if (!reportes || reportes.length === 0) {
           return "No hay datos";
         }
 
-        const datosRecurrentes = reportes.reduce((contador, reporte) => {
-          contador[reporte.dato] = (contador[reporte.dato] || 0) + 1;
-          return contador;
-        }, {});
-
-        const datoMasRecurrente = Object.keys(datosRecurrentes).reduce(
-          (dato, key) =>
-            datosRecurrentes[key] > datosRecurrentes[dato] ? key : dato,
-          Object.keys(datosRecurrentes)[0]
-        );
-
-        return datoMasRecurrente !== null ? datoMasRecurrente : "No hay datos";
+        const numeros = reportes.map(reporte => parseFloat(reporte.dato));
+        const total = numeros.reduce((acumulador, numero) => acumulador + numero, 0);
+        const promedio = total / numeros.length;
+        return parseFloat(promedio.toFixed(3));
       };
 
-      const datoMasRecurrenteTemperatura =
-        obtenerDatoMasRecurrente(reportesTemperatura);
-      const datoMasRecurrenteHumedad =
-        obtenerDatoMasRecurrente(reportesHumedad);
-      const datoMasRecurrentePresionAtmosferica = obtenerDatoMasRecurrente(
-        reportesPresionAtmosferica
-      );
+      const promedioTemperatura = calcularPromedio(reportesTemperatura);
+      const promedioHumedad = calcularPromedio(reportesHumedad);
+      const promedioPresionAtmosferica = calcularPromedio(reportesPresionAtmosferica);
+
+      const data = {
+        fecha: fechaEspecifica,
+        promedioTemperatura,
+        promedioHumedad,
+        promedioPresionAtmosferica,
+      };
+      console.log(data);
 
       res.status(200);
       res.json({
         message: "Éxito",
         code: 200,
-        data: {
-          fecha: fechaEspecifica,
-          datoMasRecurrenteTemperatura,
-          datoMasRecurrenteHumedad,
-          datoMasRecurrentePresionAtmosferica,
-        },
+        data: data,
       });
+
     } catch (error) {
       res.status(500);
       res.json({
@@ -492,5 +486,55 @@ class ReporteControl {
       });
     }
   }
+
+  async resumenPorRangoDeFechas(req, res) {
+    const fechaInicio = req.query.fechaInicio;
+    const fechaFin = req.query.fechaFin;
+
+    try {
+        const reportes = await reporte.findAll({
+            where: {
+                fecha: {
+                    [Op.between]: [fechaInicio, fechaFin]
+                },
+            },
+            attributes: ["fecha", "tipo_dato", "dato"],
+            order: [["fecha", "ASC"]],
+        });
+
+        const promediosPorDia = {};
+        reportes.forEach(reporte => {
+          const fecha = reporte.fecha;
+            if (!promediosPorDia[fecha]) {
+                promediosPorDia[fecha] = {};
+            }
+            if (!promediosPorDia[fecha][reporte.tipo_dato]) {
+                promediosPorDia[fecha][reporte.tipo_dato] = [];
+            }
+            promediosPorDia[fecha][reporte.tipo_dato].push(parseFloat(reporte.dato));
+        });
+
+        for (const fecha in promediosPorDia) {
+            for (const tipo_dato in promediosPorDia[fecha]) {
+                const promedio = promediosPorDia[fecha][tipo_dato].reduce((acc, curr) => acc + curr, 0) / promediosPorDia[fecha][tipo_dato].length;
+                promediosPorDia[fecha][tipo_dato] = parseFloat(promedio.toFixed(3));
+            }
+        }
+
+        res.status(200);
+        res.json({
+            message: "Éxito",
+            code: 200,
+            data: promediosPorDia,
+        });
+    } catch (error) {
+        res.status(500);
+        res.json({
+            message: "Error interno del servidor",
+            code: 500,
+            error: error.message,
+        });
+    }
+}
 }
 module.exports = ReporteControl;
