@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from "react";
 import TarjetasPronosticos from "@/componentes/tarjetasPronostico";
 import ListadoPronostico from "@/componentes/listaPronosticoHoras";
+import Link from "next/link";
+import Menu from "@/componentes/menuInicio";
 
 export default function Page() {
     const [selectedTipoDato, setSelectedTipoDato] = useState("");
@@ -41,7 +43,10 @@ export default function Page() {
 
     return (
         <div className="container mt-4">
-            <TarjetasPronosticos />
+            <header>
+                <Menu />
+            </header>
+
             <h2 className="mt-4">Pronóstico por hora</h2>
             <div className="row mt-4">
                 <div className="col-md-6">
@@ -74,9 +79,13 @@ export default function Page() {
                 </div>
             </div>
             {/* Mostrar ListadoPronostico si el estado es true */}
-
             <ListadoPronostico tipoDato={selectedTipoDato} fecha={selectedFecha} />
+            <TarjetasPronosticos />
 
+            <div className="mt-3">
+                <p>-----------------------------------------------------------------------------------------------------------------
+                    ------------------------------------------------------------</p>
+            </div>
         </div>
     );
 }

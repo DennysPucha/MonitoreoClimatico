@@ -20,8 +20,8 @@ export default function Page() {
     try {
       const response = await obtenerTodo(`resumenFecha/reportes?fecha=${fechaSeleccionada}`);
       if (response.code === 200) {
-        const { datoMasRecurrenteTemperatura, datoMasRecurrenteHumedad, datoMasRecurrentePresionAtmosferica } = response.data;
-        if (datoMasRecurrenteTemperatura === "No hay datos" && datoMasRecurrenteHumedad === "No hay datos" && datoMasRecurrentePresionAtmosferica === "No hay datos") {
+        const { promedioTemperatura, promedioHumedad, promedioPresionAtmosferica } = response.data;
+        if (promedioTemperatura === "No hay datos" && promedioHumedad === "No hay datos" && promedioPresionAtmosferica === "No hay datos") {
           mensajes("No hay reportes registrados en este día", "info", "Advertencia");
           setReportes([]);
         } else {
@@ -43,11 +43,11 @@ export default function Page() {
   }, [selectedDate]);
 
   return (
-    <div className="container mt-4">
-      <header>
-        {/* <MenuInicio /> */}
-      </header>
-      <style jsx global>{`
+    <div>
+      <MenuInicio />
+      <div className="container mt-4">
+
+        <style jsx global>{`
         body {
           margin: 0;
           padding: 0;
@@ -59,56 +59,62 @@ export default function Page() {
         }
       `}</style>
 
-      <div className="d-flex flex-column align-items-center">
-        <h1 className="text-white"><strong>Historial de Datos</strong></h1>
-        <div className="overflow-auto border p-3 bg-black bg-opacity-10 text-white rounded d-flex align-items-center">
-          <label htmlFor="filtroFecha" className="mr-2" style={{ marginRight: "1em" }}>
-            <strong>Selecciona una fecha:</strong>
-          </label>
-          <div style={{ width: "250px" }}>
-            <DatePicker
-              selected={selectedDate}
-              onChange={(date) => setSelectedDate(date)}
-              dateFormat="dd/MM/yyyy"
-              locale={esLocale}
-              maxDate={new Date()}
-              className="form-control"
-              wrapperClassName="w-100"
-              popperClassName="datepicker-popper"
-            />
+        <div className="d-flex flex-column align-items-center">
+          <h1 className="text-white"><strong>Historial de Datos</strong></h1>
+          <div className="overflow-auto border p-3 bg-black bg-opacity-10 text-white rounded d-flex align-items-center">
+            <label htmlFor="filtroFecha" className="mr-2" style={{ marginRight: "1em" }}>
+              <strong>Selecciona una fecha:</strong>
+            </label>
+            <div style={{ width: "250px" }}>
+              <DatePicker
+                selected={selectedDate}
+                onChange={(date) => setSelectedDate(date)}
+                dateFormat="dd/MM/yyyy"
+                locale={esLocale}
+                maxDate={new Date()}
+                className="form-control"
+                wrapperClassName="w-100"
+                popperClassName="datepicker-popper"
+              />
+            </div>
           </div>
-        </div>
 
-        <div className="d-flex flex-wrap justify-content-center mt-4">
-          {reportes.map((reporte, index) => (
-            <div key={index} className="card m-2" style={{ width: "25rem" }}>
-              <div className="card-body">
-                <h3 className="card-title">Fecha: {format(selectedDate, "dd/MM/yyyy", { locale: esLocale })}</h3>
-                <div className="d-flex align-items-center mb-2">
-                  <p className="card-text me-2 mb-0">Temperatura: </p>
-                  <p className="card-text mb-0">{reporte?.datoMasRecurrenteTemperatura || "No hay datos"}</p>
-                  <FaTemperatureHigh className="me-2" style={{ marginLeft: "1em", color: "blue" }} />
-                </div>
-                <div className="d-flex align-items-center mb-2">
-                  <p className="card-text me-2 mb-0">Humedad: </p>
-                  <p className="card-text mb-0">{reporte?.datoMasRecurrenteHumedad || "No hay datos"}</p>
-                  <WiHumidity className="me-2" style={{ marginLeft: "1em", color: "greenyellow" }} />
-                </div>
-                <div className="d-flex align-items-center mb-2">
-                  <p className="card-text me-2 mb-0">Presión Atmosférica: </p>
-                  <p className="card-text mb-0">{reporte?.datoMasRecurrentePresionAtmosferica || "No hay datos"}</p>
-                  <GiClockwork className="me-2" style={{ marginLeft: "1em", color: "royalblue" }} />
-                </div>
-                <div className="d-flex justify-content-center mt-3">
-                  {reporte.fecha && (
-                    <Link href={`cargarDataDay/${String(reporte.fecha)}`} passHref>
-                      <button className="btn btn-primary">Ver detalle</button>
-                    </Link>
-                  )}
+          <div className="d-flex flex-wrap justify-content-center mt-4">
+            {reportes.map((reporte, index) => (
+              <div key={index} className="card m-2" style={{ width: "25rem" }}>
+                <div className="card-body">
+                  <h3 className="card-title">Fecha: {format(selectedDate, "dd/MM/yyyy", { locale: esLocale })}</h3>
+                  <div className="d-flex align-items-center mb-2">
+                    <p className="card-text me-2 mb-0">Temperatura: </p>
+                    <p className="card-text mb-0">{reporte?.promedioTemperatura || "No hay datos"}</p>
+                    <FaTemperatureHigh className="me-2" style={{ marginLeft: "1em", color: "blue" }} />
+                  </div>
+                  <div className="d-flex align-items-center mb-2">
+                    <p className="card-text me-2 mb-0">Humedad: </p>
+                    <p className="card-text mb-0">{reporte?.promedioHumedad || "No hay datos"}</p>
+                    <WiHumidity className="me-2" style={{ marginLeft: "1em", color: "greenyellow" }} />
+                  </div>
+                  <div className="d-flex align-items-center mb-2">
+                    <p className="card-text me-2 mb-0">Presión Atmosférica: </p>
+                    <p className="card-text mb-0">{reporte?.promedioPresionAtmosferica || "No hay datos"}</p>
+                    <GiClockwork className="me-2" style={{ marginLeft: "1em", color: "royalblue" }} />
+                  </div>
+                  <div className="d-flex justify-content-center mt-3">
+                    {reporte.fecha && (
+                      <Link href={`cargarDataDay/${String(reporte.fecha)}`} passHref>
+                        <button className="btn btn-primary">Ver detalle</button>
+                      </Link>
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
+        </div>
+        <div className="text-center mt-3">
+          <Link href="/sensores">
+            <button className="btn btn-primary">Volver</button>
+          </Link>
         </div>
       </div>
     </div>

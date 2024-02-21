@@ -1,11 +1,14 @@
+import Link from "next/link";
+
 export default function Menu() {
     return (
-        <nav className="navbar navbar-expand-lg" style={{ backgroundColor: 'rgba(1, 1, 1, 0.2)' }}>
+        <nav className="navbar navbar-expand-lg navbar-light" style={{ backgroundColor: 'rgba(255, 255, 255, 0.0)' }}>
             <div className="container-fluid">
-                {/* Imagen al inicio del menú */}
-                <div className="navbar-brand" href="../inicioSesion">
-                    <img src="https://cdn-icons-png.flaticon.com/512/2383/2383684.png" alt="Inicio" height="50" />
-                </div>
+                <Link href="../sensores" passHref>
+                    <div className="navbar-brand">
+                        <img src="https://i.pinimg.com/564x/eb/82/a0/eb82a0d0be0575ab76c74579fc2ee6c9.jpg" alt="Inicio" height="50" style={{ borderRadius: '50%' }} />
+                    </div>
+                </Link>
 
                 <button
                     className="navbar-toggler"
@@ -22,13 +25,8 @@ export default function Menu() {
                 <div className="collapse navbar-collapse" id="navbarNav">
                     <ul className="navbar-nav ml-auto">
                         <li className="nav-item">
-                            <a className="nav-link" href="../inicioSesion" style={{ color: 'white', fontSize: '20px' }}>
+                            <a className="nav-link" href="../principal" style={{ color: 'white', fontSize: '20px' }}>
                                 Cerrar sesión
-                            </a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="../informes" style={{ color: 'white', fontSize: '20px' }}>
-                                Historial
                             </a>
                         </li>
                         <li className="nav-item">
@@ -36,15 +34,9 @@ export default function Menu() {
                                 Sensores
                             </a>
                         </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="../pronostico" style={{ color: 'white', fontSize: '20px' }}>
-                                Pronostico
-                            </a>
-                        </li>
                     </ul>
                 </div>
-
-                {/* Imagen al final del menú
+                {/* 
                 <a className="navbar-brand" href="/ruta/de/tu/imagen-fin.png">
                     <img src="https://cdn.icon-icons.com/icons2/1369/PNG/512/-account-circle_89831.png" alt="Fin" height="50" />
                 </a> */}

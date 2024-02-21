@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { inicioSesion } from "@/hooks/inicio_sesion";
 import { borrarSesion, getRol } from "@/hooks/SessionUtil";
 import MenuInicio from "@/componentes/menuInicio";
+
 export default function InicioSesion() {
     borrarSesion();
     const router = useRouter();
@@ -33,17 +34,17 @@ export default function InicioSesion() {
     };
 
     return (
-        <div className="container" >
+        <div className="container">
             <MenuInicio></MenuInicio>
             <div className="col-lg-6 mx-auto mt-5">
-                <div className="card" style={{ width: '500px', padding: '15px', borderRadius: '10px', backgroundColor: 'rgba(51, 185, 251, 0.1)', textAlign: 'center' }}>
+                <div className="card" style={{ width: '500px', padding: '15px', borderRadius: '10px', backgroundColor: 'rgba(255, 255, 255, 0.9)', textAlign: 'center' }}>
                     <h1 style={{ fontSize: '2rem', fontWeight: 'bold', marginBottom: '20px' }}>
                         Inicio de Sesión
                     </h1>
 
                     <div className="card-body py-5 px-md-5">
                         <form onSubmit={handleSubmit(sendData)}>
-                            <div className="form-outline mb-4" >
+                            <div className="form-outline mb-4">
                                 <input
                                     {...register("identificador")}
                                     type="text"
@@ -86,4 +87,3 @@ export default function InicioSesion() {
         </div>
     );
 }
-

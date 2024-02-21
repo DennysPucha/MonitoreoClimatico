@@ -6,8 +6,10 @@ import MenuInicio from '@/componentes/menuInicio';
 import tarjetasPronosticos from '@/componentes/tarjetasPronostico';
 import { obtener } from '@/hooks/Conexion';
 import TarjetasPronosticos from '@/componentes/tarjetasPronostico';
+import { borrarSesion } from '@/hooks/SessionUtil';
 
 const Page = () => {
+    borrarSesion();
     const [ultimosReportes, setUltimosReportes] = useState([]);
 
     useEffect(() => {
@@ -35,33 +37,30 @@ const Page = () => {
     };
 
     return (
-        <div style={styles.container} >
-            <header>
+        <div>
+            <MenuInicio></MenuInicio>
+            <div style={styles.container} >
 
-                <MenuInicio></MenuInicio>
-
-
-
-            </header>
-            <header style={styles.header}>
-                <h1 style={styles.title2}>Temperatura actual</h1>
-            </header>
-            <section style={styles.mainSection}>
-                <div style={styles.moteContainer}>
-                    <div style={styles.moteCard}>
-                        <h2>{ultimosReportes.reporteTemperatura ? ultimosReportes.reporteTemperatura.sensor.nombre : '0.00'}</h2>
-                        <p>Temperatura: {ultimosReportes.reporteTemperatura ? Math.round(ultimosReportes.reporteTemperatura.dato) + ' °C' : '0.00'}</p>
-                        <p>Humedad: {ultimosReportes.reporteHumedad ? Math.round(ultimosReportes.reporteHumedad.dato) + ' %' : '0.00'}</p>
-                        <p>Presión: {ultimosReportes.reportePresionAtmosferica ? Math.round(ultimosReportes.reportePresionAtmosferica.dato) + ' hPa' : '0.00'}</p>
+                <header style={styles.header}>
+                    <h1 style={styles.title2}>Temperatura actual</h1>
+                </header>
+                <section style={styles.mainSection}>
+                    <div style={styles.moteContainer}>
+                        <div style={styles.moteCard}>
+                            <h2>{ultimosReportes.reporteTemperatura ? ultimosReportes.reporteTemperatura.sensor.nombre : '0.00'}</h2>
+                            <p>Temperatura: {ultimosReportes.reporteTemperatura ? Math.round(ultimosReportes.reporteTemperatura.dato) + ' °C' : '0.00'}</p>
+                            <p>Humedad: {ultimosReportes.reporteHumedad ? Math.round(ultimosReportes.reporteHumedad.dato) + ' %' : '0.00'}</p>
+                            <p>Presión: {ultimosReportes.reportePresionAtmosferica ? Math.round(ultimosReportes.reportePresionAtmosferica.dato) + ' hPa' : '0.00'}</p>
+                        </div>
                     </div>
-                </div>
-                <TarjetasPronosticos></TarjetasPronosticos>
-                <p></p>
-                <button style={styles.button} onClick={handleUpdateChart}>Ver detalles</button>
+                    <TarjetasPronosticos></TarjetasPronosticos>
+                    <p></p>
+                    <button style={styles.button} onClick={handleUpdateChart}>Ver detalles</button>
 
-            </section>
-            <div>
-                {/* <ChartComponent></ChartComponent> */}
+                </section>
+                <div>
+                    {/* <ChartComponent></ChartComponent> */}
+                </div>
             </div>
         </div>
     );

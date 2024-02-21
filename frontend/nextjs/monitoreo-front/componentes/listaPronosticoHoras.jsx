@@ -21,35 +21,37 @@ const ListadoPronostico = ({ tipoDato, fecha }) => {
     console.log(pronosticos);
 
     return (
-        <div className="container mt-4">
-            <div className="table-responsive" style={{ maxHeight: "200px", overflowY: "scroll" }}>
-                <table className="table table-bordered table-striped text-center">
-                    <thead className="thead-dark">
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Fecha</th>
-                            <th scope="col">Hora</th>
-                            <th scope="col">{tipoDato}</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {pronosticos && pronosticos.length > 0 ? (
-                            pronosticos.map((pronostico, index) => (
-                                <tr key={index}>
-                                    <th scope="row">{index + 1}</th>
-                                    <td>{pronostico.fecha}</td>
-                                    <td>{pronostico.hora}</td>
-                                    <td>{pronostico.dato}</td>
-                                </tr>
-                            ))
-                        ) : (
+        <div>
+            <div className="container mt-4">
+                <div className="table-responsive" style={{ maxHeight: "200px", overflowY: "scroll" }}>
+                    <table className="table table-bordered table-striped text-center">
+                        <thead className="thead-dark">
                             <tr>
-                                <td colSpan="4">No se encontraron pronósticos</td>
+                                <th scope="col">#</th>
+                                <th scope="col">Fecha</th>
+                                <th scope="col">Hora</th>
+                                <th scope="col">{tipoDato}</th>
                             </tr>
-                        )}
+                        </thead>
+                        <tbody>
+                            {pronosticos && pronosticos.length > 0 ? (
+                                pronosticos.map((pronostico, index) => (
+                                    <tr key={index}>
+                                        <th scope="row">{index + 1}</th>
+                                        <td>{pronostico.fecha}</td>
+                                        <td>{pronostico.hora}</td>
+                                        <td>{pronostico.dato}</td>
+                                    </tr>
+                                ))
+                            ) : (
+                                <tr>
+                                    <td colSpan="4">No se encontraron pronósticos</td>
+                                </tr>
+                            )}
 
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     );

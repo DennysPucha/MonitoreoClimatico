@@ -1,14 +1,14 @@
 import Link from "next/link";
 
-export default function MenuInicio() {
+export default function Menu() {
     return (
-        <nav className="navbar navbar-expand-lg" >
+        <nav className="navbar navbar-expand-lg navbar-light" style={{ backgroundColor: 'rgba(255, 255, 255, 0.0)' }}>
             <div className="container-fluid">
-                {/* Imagen al inicio del menú */}
-                <div className="navbar-brand">
-                    <img src="https://cdn-icons-png.flaticon.com/512/2383/2383684.png" alt="Inicio" height="50" />
-                </div>
-
+                <Link href="../principal" passHref>
+                    <div className="navbar-brand">
+                        <img src="https://i.pinimg.com/564x/eb/82/a0/eb82a0d0be0575ab76c74579fc2ee6c9.jpg" alt="Inicio" height="50" style={{ borderRadius: '50%' }} />
+                    </div>
+                </Link>
 
                 <button
                     className="navbar-toggler"
@@ -25,26 +25,32 @@ export default function MenuInicio() {
                 <div className="collapse navbar-collapse" id="navbarNav">
                     <ul className="navbar-nav ml-auto">
                         <li className="nav-item">
-                            <h>
-                                Monitoreo climático
-                            </h>
+                            <Link href="../inicioSesion" passHref>
+                                <div className="nav-link" style={{ color: 'white', fontSize: '20px' }}>Iniciar Sesion</div>
+                            </Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link href="../informes" passHref>
+                                <div className="nav-link" style={{ color: 'white', fontSize: '20px' }}>Historial</div>
+                            </Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link href="../pronostico" passHref>
+                                <div className="nav-link" style={{ color: 'white', fontSize: '20px' }}>Pronóstico</div>
+                            </Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link href="../graphicRes" passHref>
+                                <div className="nav-link" style={{ color: 'white', fontSize: '20px' }}>Gráfica</div>
+                            </Link>
                         </li>
                     </ul>
                 </div>
-
-                <div className="navbar-nav ml-auto">
-                    <li className="nav-item">
-                        <Link href="/informes" passHref>
-                            <button className="btn btn-outline-dark">Ver historial</button>
-                        </Link>
-                    </li>
-                    <li className="nav-item" style={{ marginLeft: "5px" }}>
-                        <Link href="/inicioSesion" passHref>
-                            <button className="btn btn-light">Iniciar sesión</button>
-                        </Link>
-                    </li>
-                </div>
-
+                {/* <Link href="/ruta/de/tu/imagen-fin.png" passHref>
+                    <div className="navbar-brand">
+                        <img src="https://cdn.icon-icons.com/icons2/1369/PNG/512/-account-circle_89831.png" alt="Fin" height="50" />
+                    </div>
+                </Link> */}
             </div>
         </nav>
     );
