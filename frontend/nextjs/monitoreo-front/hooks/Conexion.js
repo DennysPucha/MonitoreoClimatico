@@ -6,7 +6,7 @@ export function url_api() {
   return URL;
 }
 
-export async function obtener(recurso) {
+export function obtener(recurso) {
   return fetch(URL + recurso)
     .then(response => response.json());
 }

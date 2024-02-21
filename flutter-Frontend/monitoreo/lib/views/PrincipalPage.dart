@@ -178,8 +178,7 @@ class _PrincipalPageState extends State<PrincipalPage> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        title: Text('Principal Page'),
-        backgroundColor: Colors.blueAccent,
+        title: Text('Página Principal'),
         // Añade el icono de menú
         leading: IconButton(
           icon: Icon(Icons.menu),

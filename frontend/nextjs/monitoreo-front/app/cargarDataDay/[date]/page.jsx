@@ -118,36 +118,36 @@ export default function Page({ params }) {
 
             <Modal show={showModal} onHide={handleModalClose}>
                 <Modal.Header closeButton>
-                    <Modal.Title className="text-dark" style={{marginRight:"2em"}}>Información del Clima</Modal.Title>
+                    <Modal.Title className="text-dark" style={{ marginRight: "2em" }}>Información del Clima</Modal.Title>
                     {clima && (
                         <div>
                             {clima === "Caluroso y húmedo" && (
-                                <FaSunPlantWilt style={{ width: "50px", height: "50px" ,color: 'yellow'}} />
+                                <FaSunPlantWilt style={{ width: "50px", height: "50px", color: 'yellow' }} />
                             )}
                             {clima === "Frío y baja presión" && (
-                                <GiSunCloud style={{ width: "50px", height: "50px" ,color: 'grey'}} />
+                                <GiSunCloud style={{ width: "50px", height: "50px", color: 'grey' }} />
                             )}
                             {clima === "Caluroso" && (
-                                 <CiSun style={{ width: "50px", height: "50px" ,color: 'yellow'}} />
+                                <CiSun style={{ width: "50px", height: "50px", color: 'yellow' }} />
                             )}
                             {clima === "Frío y alta presión" && (
-                                <RiTempColdFill style={{ width: "50px", height: "50px" ,color: 'blue'}} />
+                                <RiTempColdFill style={{ width: "50px", height: "50px", color: 'blue' }} />
                             )}
                             {clima === "Húmedo" && (
-                                <RiRainyFill style={{ width: "50px", height: "50px" ,color: 'grey'}} />
+                                <RiRainyFill style={{ width: "50px", height: "50px", color: 'grey' }} />
                             )}
                             {clima === "Normal con baja presión" && (
-                                <IoPartlySunnySharp style={{ width: "50px", height: "50px" ,color: 'blue'}} />
+                                <IoPartlySunnySharp style={{ width: "50px", height: "50px", color: 'blue' }} />
                             )}
                             {clima === "Normal" && (
-                                <PiCloudSunBold style={{ width: "50px", height: "50px" ,color: 'blue'}} />
+                                <PiCloudSunBold style={{ width: "50px", height: "50px", color: 'blue' }} />
                             )}
                         </div>
                     )}
                 </Modal.Header>
                 <Modal.Body className="text-dark">
                     <p>Tipo de clima: {clima}</p>
-                    
+
                     <p>{descripcionClima}</p>
                 </Modal.Body>
             </Modal>

@@ -63,7 +63,8 @@ class _GraficaClimaState extends State<GraficaClima> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-            "Selecciona fechas - ${DateFormat('yyyy-MM-dd').format(DateTime.now())}"),
+          'Gráfica de datos climáticos',
+        ),
       ),
       drawer: Menu(),
       body: Center(

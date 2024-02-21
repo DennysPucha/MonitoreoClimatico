@@ -17,7 +17,7 @@ export default function Page({ params }) {
             .required('Ingrese el valor de la ip')
             .matches(
                 /^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/, //expresion regular mal parqueada xd
-                'Ingrese una dirección IP válida'
+                'Ingrese una dirección IP válida'   
             ),
         puerto: Yup.number().required('Ingrese el valor del puerto').positive('El puerto debe ser un número positivo').integer('El puerto debe ser un número entero'),
     });
@@ -78,7 +78,7 @@ export default function Page({ params }) {
     };
 
     return (
-        <div><Menu />
+        <div>
             <div style={{ minHeight: '75vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <div className="card" style={{ width: '500px', padding: '15px', borderRadius: '10px', backgroundColor: '#f8f8ff' }}>
                     <h2 className="text-center mb-4">Editar Sensor</h2>

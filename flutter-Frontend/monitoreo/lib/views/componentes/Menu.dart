@@ -13,7 +13,7 @@ class Menu extends StatelessWidget {
             child: Text(
               'Monitoreo de clima',
               style: TextStyle(
-                color: Colors.white,
+                color: Colors.blueAccent,
                 fontSize: 30,
                 fontWeight: FontWeight.bold, // Estilo de letra más gordo
               ),
@@ -42,14 +42,14 @@ class Menu extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.bar_chart),
-            title: Text('Gráfica'),
+            title: Text('Gráfica de datos climáticos'),
             onTap: () {
               Navigator.pushReplacementNamed(context, '/grafica');
             },
           ),
           ListTile(
-            leading: Icon(Icons.info),
-            title: Text('Informe'),
+            leading: Icon(Icons.history),
+            title: Text('Historial'),
             onTap: () {
               Navigator.pushReplacementNamed(context, '/informe');
             },

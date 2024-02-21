@@ -97,7 +97,6 @@ class _PronosticoPageState extends State<PronosticoPage> {
         break;
     }
 
-    // Aquí puedes personalizar cómo deseas mostrar el ícono y el texto
     return Column(
       children: [
         icon,
@@ -106,23 +105,23 @@ class _PronosticoPageState extends State<PronosticoPage> {
     );
   }
 
-  Future<void> _selectDate(BuildContext context) async {
-    late DateTime picked;
+ Future<void> _selectDate(BuildContext context) async {
+  DateTime? picked;
 
-    picked = (await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime.now(),
-      lastDate: DateTime.now().add(Duration(days: 7)),
-    ))!;
+  picked = await showDatePicker(
+    context: context,
+    initialDate: DateTime.now(),
+    firstDate: DateTime.now(),
+    lastDate: DateTime.now().add(Duration(days: 7)),
+  );
 
-    if (picked != null && picked != DateTime.now()) {
-      setState(() {
-        selectedDate = picked.toLocal().toString().split(' ')[0];
-      });
-      traerRangos(selectedTipoDato, selectedDate);
-    }
+  if (picked != null) {
+    setState(() {
+      selectedDate = picked!.toLocal().toString().split(' ')[0];
+    });
+    traerRangos(selectedTipoDato, selectedDate);
   }
+}
 
   Future<void> _selectTipoDato(BuildContext context) async {
     String? tipoSeleccionado = await showDialog<String?>(
@@ -227,7 +226,7 @@ class _PronosticoPageState extends State<PronosticoPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Pronóstico Page'),
+        title: Text('Pronóstico'),
         actions: [
           IconButton(
             icon: Icon(Icons.calendar_today),
