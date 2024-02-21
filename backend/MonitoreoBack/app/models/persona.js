@@ -9,16 +9,13 @@ module.exports = (sequelize, DataTypes) => {
         direccion: { type: DataTypes.STRING(300), defaultValue: "NONE" },
         cedula: { type: DataTypes.STRING(15), defaultValue: "NONE" },
         external_id: { type: DataTypes.UUID, defaultValue: DataTypes.UUIDV4 }
-    }, {freezeTableName: true });
-    persona.associate=function(models){
-        persona.hasOne(models.cuenta,{
-            foreignKey:'id_persona',as:'cuenta'
+    }, { freezeTableName: true });
+    persona.associate = function (models) {
+        persona.hasOne(models.cuenta, {
+            foreignKey: 'id_persona', as: 'cuenta'
         });
-        persona.belongsTo(models.rol,{
-            foreignKey:'id_rol'
-        });
-        persona.hasMany(models.pronostico,{
-            foreignKey:'id_persona', as:'pronostico'
+        persona.belongsTo(models.rol, {
+            foreignKey: 'id_rol'
         });
         persona.belongsToMany(models.sensor, {
             through: 'PersonaSensor'
