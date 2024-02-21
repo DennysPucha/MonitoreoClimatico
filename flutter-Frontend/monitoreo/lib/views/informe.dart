@@ -265,7 +265,7 @@ class _DetalleInformeModalState extends State<DetalleInformeModal> {
                   'NINGUNO',
                   'Temperatura',
                   'Humedad',
-                  'PresionAtmosferica'
+                  'Presion_Atmosferica'
                 ].map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
