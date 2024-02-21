@@ -36,10 +36,6 @@ export default function Menu() {
                         </li>
                     </ul>
                 </div>
-                {/* 
-                <a className="navbar-brand" href="/ruta/de/tu/imagen-fin.png">
-                    <img src="https://cdn.icon-icons.com/icons2/1369/PNG/512/-account-circle_89831.png" alt="Fin" height="50" />
-                </a> */}
             </div>
         </nav>
     );
