@@ -8,12 +8,14 @@ const RolController = require('../app/controls/RolControl');
 const CuentaController = require('../app/controls/CuentaControl');
 const SensorController = require('../app/controls/SensorControl');
 const ReporteController = require('../app/controls/ReporteControl');
+const PronosticoControl = require('../app/controls/PronosticoControl');
 
 const personaController = new PersonaController();
 const rolController = new RolController();
 const cuentaController = new CuentaController();
 const sensorController = new SensorController();
 const reporteControler = new ReporteController();
+const pronosticoControl = new PronosticoControl();
 
 router.get('/', function (req, res, next) {
     res.send('respond with a resource');
@@ -82,10 +84,21 @@ router.get('/buscar/reportes/:external', reporteControler.buscar);
 router.get('/buscarporFecha/reportes/', reporteControler.buscarporFecha);
 router.get('/buscarporFechaYTipoDato/reportes/', reporteControler.buscarporFechaYTipoDato);
 router.get('/resumenFecha/reportes/', reporteControler.resumenPorFecha);
+router.get('/resumenRangoFechas/reportes/', reporteControler.resumenPorRangoDeFechas);
+router.get('/ultimoReporte/reportes/', reporteControler.ultimoReporte);
 
-router.get('/buscarporFecha/determinarClima',reporteControler.determinarClima);
+
+router.get('/buscarporFecha/determinarClima', reporteControler.determinarClima);
 //router.post('/borrar/reportes', reporteControler.borrarTodosLosDatos);
 
+
+router.get('/listar/pronosticos', pronosticoControl.listar);
+router.post('/guardar/pronostico', pronosticoControl.guardar);
+router.delete('/eliminar/pronostico', pronosticoControl.eliminarTodosRegistros);
+router.get('/obtener/rangos/', pronosticoControl.obtenerMananaTardeNoche);
+router.get('/buscarporFecha/pronosticos/', pronosticoControl.buscarporFecha);
+
 sensorController.iniciarTareaPeriodica();
+
 
 module.exports = router;

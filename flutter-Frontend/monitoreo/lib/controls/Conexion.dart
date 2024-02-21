@@ -5,8 +5,8 @@ import 'package:http/http.dart' as http;
 import 'package:monitoreo/controls/utiles/Utiles.dart';
 
 class Conexion {
-  final String URL = "http://192.168.3.10:3000/api/admin/";
-  final String URL_MEDIA = "http://192.168.3.10:3000/multimedia/";
+  final String URL = "http://localhost:3000/monitoreo/";
+
   static bool NO_TOKEN = false;
 
   Future<RespuestaGenerica> get(String recurso, bool token) async {
@@ -26,7 +26,7 @@ class Conexion {
     final uri = Uri.parse(_url);
     try {
       final response = await http.get(uri, headers: _header);
-      //log(response.body;
+      log(response.body);
       if (response.statusCode != 200) {
         if (response.statusCode == 404) {
           respuesta = _response(404, "Page not found", []);
@@ -35,7 +35,7 @@ class Conexion {
         }
       } else {
         Map<dynamic, dynamic> mapa = jsonDecode(response.body);
-        respuesta = _response(mapa['code'], mapa['msg'], mapa['datos']);
+        respuesta = _response(mapa['code'], mapa['message'], mapa['data']);
       }
     } catch (e) {
       respuesta = _response(500, "Internal error", []);

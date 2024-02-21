@@ -20,8 +20,8 @@ export default function Page() {
     try {
       const response = await obtenerTodo(`resumenFecha/reportes?fecha=${fechaSeleccionada}`);
       if (response.code === 200) {
-        const { datoMasRecurrenteTemperatura, datoMasRecurrenteHumedad, datoMasRecurrentePresionAtmosferica } = response.data;
-        if (datoMasRecurrenteTemperatura === "No hay datos" && datoMasRecurrenteHumedad === "No hay datos" && datoMasRecurrentePresionAtmosferica === "No hay datos") {
+        const { promedioTemperatura, promedioHumedad, promedioPresionAtmosferica } = response.data;
+        if (promedioTemperatura === "No hay datos" && promedioHumedad === "No hay datos" && promedioPresionAtmosferica === "No hay datos") {
           mensajes("No hay reportes registrados en este día", "info", "Advertencia");
           setReportes([]);
         } else {
@@ -86,17 +86,17 @@ export default function Page() {
                 <h3 className="card-title">Fecha: {format(selectedDate, "dd/MM/yyyy", { locale: esLocale })}</h3>
                 <div className="d-flex align-items-center mb-2">
                   <p className="card-text me-2 mb-0">Temperatura: </p>
-                  <p className="card-text mb-0">{reporte?.datoMasRecurrenteTemperatura || "No hay datos"}</p>
+                  <p className="card-text mb-0">{reporte?.promedioTemperatura || "No hay datos"}</p>
                   <FaTemperatureHigh className="me-2" style={{marginLeft:"1em", color:"blue"}}/>
                 </div>
                 <div className="d-flex align-items-center mb-2">
                   <p className="card-text me-2 mb-0">Humedad: </p>
-                  <p className="card-text mb-0">{reporte?.datoMasRecurrenteHumedad || "No hay datos"}</p>
+                  <p className="card-text mb-0">{reporte?.promedioHumedad || "No hay datos"}</p>
                   <WiHumidity className="me-2" style={{marginLeft:"1em", color:"greenyellow"}}/>
                 </div>
                 <div className="d-flex align-items-center mb-2">
                   <p className="card-text me-2 mb-0">Presión Atmosférica: </p>
-                  <p className="card-text mb-0">{reporte?.datoMasRecurrentePresionAtmosferica || "No hay datos"}</p>
+                  <p className="card-text mb-0">{reporte?.promedioPresionAtmosferica || "No hay datos"}</p>
                   <GiClockwork className="me-2" style={{marginLeft:"1em", color:"royalblue"}}/>
                 </div>
                 <div className="d-flex justify-content-center mt-3">
