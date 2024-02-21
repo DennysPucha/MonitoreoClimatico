@@ -1,6 +1,7 @@
 "use strict";
 
 const models = require("../models");
+const { Op } = require('sequelize');
 const { reporte, rol, cuenta, sequelize, persona, sensor } = models;
 const uuid = require("uuid");
 class ReporteControl {
@@ -216,7 +217,6 @@ class ReporteControl {
             res.json({ msg: "ERROR", tag: "Datos incorrectos", code: 400 });
         }
     }
-
     async buscar(req, res) {
         const external = req.params.external;
         const horaInicio = req.query.horaInicio;
@@ -296,6 +296,7 @@ class ReporteControl {
         }
     }
 
+
     async determinarClima(req, res) {
         const fechaEspecifica = req.query.fecha;
         function calcularPromedio(arr) {
@@ -371,6 +372,8 @@ class ReporteControl {
         }
     }
 
+
+
     async buscarporFechaYTipoDato(req, res) {
         const fechaEspecifica = req.query.fecha;
         const tipoDatoEspecifico = req.query.tipo_dato;
@@ -444,44 +447,36 @@ class ReporteControl {
                 attributes: ["dato"],
             });
 
-            const obtenerDatoMasRecurrente = (reportes) => {
+            const calcularPromedio = (reportes) => {
                 if (!reportes || reportes.length === 0) {
                     return "No hay datos";
                 }
 
-                const datosRecurrentes = reportes.reduce((contador, reporte) => {
-                    contador[reporte.dato] = (contador[reporte.dato] || 0) + 1;
-                    return contador;
-                }, {});
-
-                const datoMasRecurrente = Object.keys(datosRecurrentes).reduce(
-                    (dato, key) =>
-                        datosRecurrentes[key] > datosRecurrentes[dato] ? key : dato,
-                    Object.keys(datosRecurrentes)[0]
-                );
-
-                return datoMasRecurrente !== null ? datoMasRecurrente : "No hay datos";
+                const numeros = reportes.map(reporte => parseFloat(reporte.dato));
+                const total = numeros.reduce((acumulador, numero) => acumulador + numero, 0);
+                const promedio = total / numeros.length;
+                return parseFloat(promedio.toFixed(3));
             };
 
-            const datoMasRecurrenteTemperatura =
-                obtenerDatoMasRecurrente(reportesTemperatura);
-            const datoMasRecurrenteHumedad =
-                obtenerDatoMasRecurrente(reportesHumedad);
-            const datoMasRecurrentePresionAtmosferica = obtenerDatoMasRecurrente(
-                reportesPresionAtmosferica
-            );
+            const promedioTemperatura = calcularPromedio(reportesTemperatura);
+            const promedioHumedad = calcularPromedio(reportesHumedad);
+            const promedioPresionAtmosferica = calcularPromedio(reportesPresionAtmosferica);
+
+            const data = {
+                fecha: fechaEspecifica,
+                promedioTemperatura,
+                promedioHumedad,
+                promedioPresionAtmosferica,
+            };
+            console.log(data);
 
             res.status(200);
             res.json({
                 message: "Éxito",
                 code: 200,
-                data: {
-                    fecha: fechaEspecifica,
-                    datoMasRecurrenteTemperatura,
-                    datoMasRecurrenteHumedad,
-                    datoMasRecurrentePresionAtmosferica,
-                },
+                data: data,
             });
+
         } catch (error) {
             res.status(500);
             res.json({
@@ -492,6 +487,55 @@ class ReporteControl {
         }
     }
 
+    async resumenPorRangoDeFechas(req, res) {
+        const fechaInicio = req.query.fechaInicio;
+        const fechaFin = req.query.fechaFin;
+
+        try {
+            const reportes = await reporte.findAll({
+                where: {
+                    fecha: {
+                        [Op.between]: [fechaInicio, fechaFin]
+                    },
+                },
+                attributes: ["fecha", "tipo_dato", "dato"],
+                order: [["fecha", "ASC"]],
+            });
+
+            const promediosPorDia = {};
+            reportes.forEach(reporte => {
+                const fecha = reporte.fecha;
+                if (!promediosPorDia[fecha]) {
+                    promediosPorDia[fecha] = {};
+                }
+                if (!promediosPorDia[fecha][reporte.tipo_dato]) {
+                    promediosPorDia[fecha][reporte.tipo_dato] = [];
+                }
+                promediosPorDia[fecha][reporte.tipo_dato].push(parseFloat(reporte.dato));
+            });
+
+            for (const fecha in promediosPorDia) {
+                for (const tipo_dato in promediosPorDia[fecha]) {
+                    const promedio = promediosPorDia[fecha][tipo_dato].reduce((acc, curr) => acc + curr, 0) / promediosPorDia[fecha][tipo_dato].length;
+                    promediosPorDia[fecha][tipo_dato] = parseFloat(promedio.toFixed(3));
+                }
+            }
+
+            res.status(200);
+            res.json({
+                message: "Éxito",
+                code: 200,
+                data: promediosPorDia,
+            });
+        } catch (error) {
+            res.status(500);
+            res.json({
+                message: "Error interno del servidor",
+                code: 500,
+                error: error.message,
+            });
+        }
+    }
 
     async ultimoReporte(req, res) {
         try {

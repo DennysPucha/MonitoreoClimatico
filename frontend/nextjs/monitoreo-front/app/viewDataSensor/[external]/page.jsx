@@ -72,7 +72,7 @@ export default function Page({ params }) {
             </div>
             {/* Agregar el botón al final de la página sin elemento <a> */}
             <div className="text-center mt-3">
-                <Link href="/otraPagina">
+                <Link href="/sensores">
                     <button className="btn btn-primary">Volver</button>
                 </Link>
             </div>

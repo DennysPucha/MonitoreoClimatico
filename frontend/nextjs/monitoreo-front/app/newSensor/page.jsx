@@ -61,7 +61,7 @@ export default function Page() {
 
     return (
         <div>
-            <Menu />
+
             <div style={{ minHeight: '75vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
 
                 <div className="card" style={{ width: '500px', padding: '15px', borderRadius: '10px', backgroundColor: '#f8f8ff' }}>

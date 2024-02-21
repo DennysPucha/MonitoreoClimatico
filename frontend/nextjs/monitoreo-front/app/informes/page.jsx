@@ -45,7 +45,7 @@ export default function Page() {
   return (
     <div className="container mt-4">
       <header>
-        <MenuInicio />
+        {/* <MenuInicio /> */}
       </header>
       <style jsx global>{`
         body {
