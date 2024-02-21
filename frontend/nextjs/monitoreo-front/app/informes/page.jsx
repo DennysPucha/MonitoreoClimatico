@@ -111,11 +111,6 @@ export default function Page() {
             ))}
           </div>
         </div>
-        <div className="text-center mt-3">
-          <Link href="/sensores">
-            <button className="btn btn-primary">Volver</button>
-          </Link>
-        </div>
       </div>
     </div>
   );

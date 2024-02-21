@@ -115,47 +115,48 @@ const Page = () => {
         setChart(newChart);
     };
     return (
-        <div>
+        <div className="container">
             <Menu></Menu>
-            <div className="container vh-100 d-flex align-items-center justify-content-center">
-
-                <div className="row justify-content-center">
-                    {/* <div className="col-12 text-center" style={{ marginBottom: "4em" }}>
-                        <h1 className="fw-bold">Gráfico de Datos Climáticos</h1>
-                    </div> */}
-                    <div className="col-6">
-                        <label className="form-label">Fecha de Inicio</label>
-                        <DatePicker
-                            selected={startDate}
-                            onChange={handleStartDateChange}
-                            maxDate={endDate}
-                            dateFormat="dd/MM/yyyy"
-                            className="form-control"
-                        />
-                    </div>
-                    <div className="col-6">
-                        <label className="form-label">Fecha de Fin</label>
-                        <DatePicker
-                            selected={endDate}
-                            onChange={handleEndDateChange}
-                            minDate={startDate}
-                            maxDate={new Date()}
-                            dateFormat="dd/MM/yyyy"
-                            className="form-control"
-                        />
-                    </div>
-                    <div className="col-6 mt-4">
-                        <button onClick={handleGetData} className="btn btn-primary w-100">Obtener Datos</button>
-                    </div>
-                    <div className="col-6 mt-4">
-                        <select value={parameter} onChange={handleParameterChange} className="form-select">
-                            <option value="TEMPERATURA">Temperatura</option>
-                            <option value="HUMEDAD">Humedad</option>
-                            <option value="PRESION_ATMOSFERICA">Presión Atmosférica</option>
-                        </select>
-                    </div>
-                    <div className="overflow-auto border p-3 bg-black bg-opacity-10 text-white rounded d-flex align-items-center" style={{ marginTop: "2em" }}>
-                        <canvas id="myChart"></canvas>
+            <div className="row justify-content-center mt-5">
+                <div className="col-md-8">
+                    <h1 className="text-center fw-bold mb-4">Gráfico de Datos Climáticos</h1>
+                    <div className="row">
+                        <div className="col-md-6">
+                            <label className="form-label">Fecha de Inicio</label>
+                            <DatePicker
+                                selected={startDate}
+                                onChange={handleStartDateChange}
+                                maxDate={endDate}
+                                dateFormat="dd/MM/yyyy"
+                                className="form-control"
+                            />
+                        </div>
+                        <div className="col-md-6">
+                            <label className="form-label">Fecha de Fin</label>
+                            <DatePicker
+                                selected={endDate}
+                                onChange={handleEndDateChange}
+                                minDate={startDate}
+                                maxDate={new Date()}
+                                dateFormat="dd/MM/yyyy"
+                                className="form-control"
+                            />
+                        </div>
+                        <div className="col-md-6 mt-4">
+                            <button onClick={handleGetData} className="btn btn-primary w-100">Obtener Datos</button>
+                        </div>
+                        <div className="col-md-6 mt-4">
+                            <select value={parameter} onChange={handleParameterChange} className="form-select">
+                                <option value="TEMPERATURA">Temperatura</option>
+                                <option value="HUMEDAD">Humedad</option>
+                                <option value="PRESION_ATMOSFERICA">Presión Atmosférica</option>
+                            </select>
+                        </div>
+                        <div className="col-md-12 mt-4">
+                            <div className="overflow-auto border p-3 bg-black bg-opacity-10 text-white rounded">
+                                <canvas id="myChart" style={{ maxWidth: "100%" }}></canvas>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

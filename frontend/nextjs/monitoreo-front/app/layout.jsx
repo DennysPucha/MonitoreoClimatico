@@ -14,7 +14,7 @@ export default function RootLayout({ children }) {
         <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
       </head>
       <body style={{
-        backgroundImage: 'url("https://img.freepik.com/fotos-premium/paisaje-oscuro-montanas-rio-primer-plano_677426-165.jpg")',
+        backgroundImage: 'url("https://img3.wallspic.com/crops/3/6/5/1/4/141563/141563-espacio-las_formaciones_montanosas-objeto_astronomico-ambiente-geologia-3000x1688.jpg")',
         backgroundSize: 'cover',
         fontFamily: 'Roboto, sans-serif' /* Aplica la fuente Roboto a todo el cuerpo */
       }} className="bg-primary text-white">
