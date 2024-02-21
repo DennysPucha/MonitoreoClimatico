@@ -12,7 +12,6 @@ export async function inicioSesion(data) {
             save("rol", sesion.data.rol);
             save("external_id", sesion.data.external_id);
         }
-
         return sesion;
     } catch (error) {
         mensajes("Error", "Error al iniciar sesion, usuario o contraseña incorrectos", "success");
