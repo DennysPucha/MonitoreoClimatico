@@ -28,7 +28,7 @@ export default function InicioSesion() {
                 mensajes("Inicio Exitoso", "success", "Bienvenido");
                 router.push("/sensores");
             } else {
-                mensajes("Error de Inicio", info.msg, "error");
+                mensajes("Error de Inicio", "error",info.msg);
             }
         });
     };
