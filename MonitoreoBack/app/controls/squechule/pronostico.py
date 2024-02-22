@@ -51,7 +51,7 @@ def entrenar_modelo(datos, tipo_dato):
 
 
 def predecir(modelo, ultima_fecha, tipo_dato):
-    # Incluir las horas restantes del día actual y predecir para las próximas 24 horas de cada día durante los próximos 6 días
+    # Incluir las horas restantes del día actual y predecir para las próximas 24 horas de cada día durante los próximos 7 días
     predicciones_futuras = pd.to_datetime(
         pd.date_range(start=ultima_fecha, periods=7 * 24 + 1, freq="H")
     )
